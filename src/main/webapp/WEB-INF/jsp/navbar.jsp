@@ -35,59 +35,28 @@
           </li>
 
 
-          <sec:authorize access="hasAnyRole('ADMIN', 'BO_USER')">
+          
 		      <li class="nav-item dropdown">
-		        <a class="nav-link dropdown-toggle ${path == 'gestioneDipendenti'?'active':''}" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestione Dipendenti</a>
+		        <a class="nav-link dropdown-toggle ${path == 'gestioneDipendenti'?'active':''}" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestione Fascicoli</a>
 		        <div class="dropdown-menu" aria-labelledby="dropdown01">
-		          <a class="dropdown-item" href="${pageContext.request.contextPath}/dipendente/search">Ricerca Dipendenti</a>
-		          <a class="dropdown-item" href="${pageContext.request.contextPath}/dipendente/insert">Inserisci Dipendente</a>
+		          <a class="dropdown-item" href="${pageContext.request.contextPath}/fascicolo/search">Ricerca Fascicoli</a>
+		          <a class="dropdown-item" href="${pageContext.request.contextPath}/fascicolo/insert">Inserisci Fascicolo</a>
 		        </div>
 		      </li>
-		   </sec:authorize>
-           <sec:authorize access="hasRole('ADMIN')">
-		      <li class="nav-item">
-	            <a class="nav-link ${path == 'gestioneUtenze'?'active':''}" aria-current="page" href="${pageContext.request.contextPath}/utente/search">Gestione Utenze</a>
-	          </li>
-		   </sec:authorize>
-		   <sec:authorize access="hasRole('DIPENDENTE_USER')">
+		      
 		      <li class="nav-item dropdown">
-		        <a class="nav-link dropdown-toggle ${path == 'gestioneRichiestePermesso'?'active':''}" href="#" id="dropdown03" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestione Permessi</a>
-		        <div class="dropdown-menu" aria-labelledby="dropdown03">
-		          <a class="dropdown-item" href="${pageContext.request.contextPath}/richiestapermesso/searchpersonal">Ricerca Permessi</a>
-		          <a class="dropdown-item" href="${pageContext.request.contextPath}/richiestapermesso/insert">Inserisci Permessi</a>
+		        <a class="nav-link dropdown-toggle ${path == 'gestioneDipendenti'?'active':''}" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestione Documenti</a>
+		        <div class="dropdown-menu" aria-labelledby="dropdown01">
+		          <a class="dropdown-item" href="${pageContext.request.contextPath}/documento/search">Ricerca Documenti</a>
+		          <a class="dropdown-item" href="${pageContext.request.contextPath}/documento/insert">Inserisci Documento</a>
 		        </div>
 		      </li>
-		   </sec:authorize>
-		   <sec:authorize access="hasRole('BO_USER')">
-		    <li class="nav-item">
-            	<a class="nav-link ${path == 'ricercaPermessi'?'active':''}" aria-current="page" href="${pageContext.request.contextPath}/richiestapermesso/search">Ricerca Permessi</a>
-          	</li>
-		   </sec:authorize>
-		   <sec:authorize access="hasRole('BO_USER')">
-		    <li class="nav-item">
-            	<a class="nav-link ${path == 'gestioneMessaggi'?'active':''}" aria-current="page" href="${pageContext.request.contextPath}/messaggio/search">Gestione Messaggi <span class="badge badge-danger">${message_count}</span></a>
-          	</li>
-		   </sec:authorize>
+          
 		   
         </ul>
       </div>
       
-      <sec:authorize access="isAuthenticated()">
-      <sec:authentication var="principal" property="principal" />
-        <div class="dropdown">
-        <button class="btn dropdown-toggle btn-primary btn-custom" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-          Utente: <sec:authentication property="name"/> (${userInfo.nome } ${userInfo.cognome })
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li><a class="dropdown-item" href="${pageContext.request.contextPath}/logout">Logout</a></li>
-            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/utente/changepassword/${principal.username}">Reset Password</a></li>
-        </ul>
-    </div>
-      </sec:authorize>
-      
-      <sec:authorize access="!isAuthenticated()">
-        <a href="${pageContext.request.contextPath}/logout">Logout</a>
-      </sec:authorize>
+
     </div>
   </nav>
   

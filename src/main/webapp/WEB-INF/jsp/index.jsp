@@ -43,15 +43,14 @@
 			  <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
 			  </symbol>
 			  
-			  <symbol id="calendar3" viewBox="0 0 16 16">
-			  <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
-  			  <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+			  <symbol id="file-earmark-text" viewBox="0 0 16 16">
+			  <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+  			  <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
 			  </symbol>
 			  
-			  <symbol id="building" viewBox="0 0 16 16">
-			  <path fill-rule="evenodd" d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022zM6 8.694 1 10.36V15h5V8.694zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15z"/>
-			  <path d="M2 11h1v1H2v-1zm2 0h1v1H4v-1zm-2 2h1v1H2v-1zm2 0h1v1H4v-1zm4-4h1v1H8V9zm2 0h1v1h-1V9zm-2 2h1v1H8v-1zm2 0h1v1h-1v-1zm2-2h1v1h-1V9zm0 2h1v1h-1v-1zM8 7h1v1H8V7zm2 0h1v1h-1V7zm2 0h1v1h-1V7zM8 5h1v1H8V5zm2 0h1v1h-1V5zm2 0h1v1h-1V5zm0-2h1v1h-1V3z"/>
-			  </symbol>
+			  <symbol id="archive" viewBox="0 0 16 16">
+			  <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+			   </symbol>
 			</svg>
 			<!-- ############## end ###################  -->
 	   
@@ -69,78 +68,38 @@
 				  ${errorMessage}
 				  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
 				</div>
-			    <sec:authorize access="!hasRole('ADMIN')">
 			     <div class="p-5 mb-4 bg-light rounded-3">
 				      <div class="container-fluid py-5">
-				        <h1 class="display-5 fw-bold text-center">Benvenuto ${userInfo.nome}</h1>
+				        <h1 class="display-5 fw-bold text-center">Benvenuto alla Gestione Fascicoli</h1>
 				      </div>
 			    </div>
-			    </sec:authorize>
 			  </div>
 			  
 			  <!--  features di bootstrap 'Columns with icons'  -->
 			  <div class="container px-4 py-5" id="featured-3">
 			   
 			    <div class="row">
-				  <sec:authorize access="hasAnyRole('ADMIN', 'BO_USER')">
 				  <div class="col-sm-3 mx-auto">
 				    <div class="card border-primary text-center">
 				      <div class="card-body">
-				        <h5 class="card-title">Gestione Dipendenti</h5>
-				        <p class="card-text"><svg class="bi bi-search" width="40%" height="40%"><use xlink:href="#building"/></svg></p>
-				        <a href="/dipendente/search" class="stretched-link"></a>
+				        <h5 class="card-title">Gestione Fascicoli</h5>
+				        <p class="card-text"><svg class="bi bi-search" width="40%" height="40%"><use xlink:href="#archive"/></svg></p>
+				        <a href="/fascicolo/search" class="stretched-link"></a>
 				      </div>
 				    </div>
 				  </div>
-				  </sec:authorize>
 				  
-				  <sec:authorize access="hasRole('BO_USER')">
 				  <div class="col-sm-3 mx-auto">
 				    <div class="card border-primary text-center">
 				      <div class="card-body">
-				        <h5 class="card-title">Ricerca Permessi</h5>
-				        <p class="card-text"><svg class="bi bi-search" width="40%" height="40%"><use xlink:href="#search"/></svg></p>
-				        <a href="/richiestapermesso/search" class="stretched-link"></a>
+				        <h5 class="card-title">Gestione Documenti</h5>
+				        <p class="card-text"><svg class="bi bi-search" width="40%" height="40%"><use xlink:href="#file-earmark-text"/></svg></p>
+				        <a href="/documento/search" class="stretched-link"></a>
 				      </div>
 				    </div>
 				  </div>
-				  </sec:authorize>
 				  
-				  <sec:authorize access="hasRole('BO_USER')">
-				  <div class="col-sm-3 mx-auto">
-				    <div class="card border-primary text-center">
-				      <div class="card-body">
-				        <h5 class="card-title">Gestione Messaggi</h5>
-				        <p class="card-text"><svg class="bi bi-search" width="40%" height="40%"><use xlink:href="#envelope"/></svg></p>
-				        <a href="/messaggio/search" class="stretched-link"></a>
-				      </div>
-				    </div>
-				  </div>
-				  </sec:authorize>
 				  
-				  <sec:authorize access="hasRole('ADMIN')">
-				  <div class="col-sm-3 mx-auto">
-				    <div class="card border-primary text-center">
-				      <div class="card-body">
-				        <h5 class="card-title">Gestione Utenze</h5>
-				        <p class="card-text"><svg class="bi bi-search" width="40%" height="40%"><use xlink:href="#people"/></svg></p>
-				        <a href="/utente/search" class="stretched-link"></a>
-				      </div>
-				    </div>
-				  </div>
-				  </sec:authorize>
-				  
-				  <sec:authorize access="hasRole('DIPENDENTE_USER')">
-				  <div class="col-sm-3 mx-auto">
-				    <div class="card border-primary text-center">
-				      <div class="card-body">
-				        <h5 class="card-title">Gestione Permessi</h5>
-				        <p class="card-text"><svg class="bi bi-search" width="40%" height="40%"><use xlink:href="#calendar3"/></svg></p>
-				        <a href="/richiestapermesso/searchpersonal" class="stretched-link"></a>
-				      </div>
-				    </div>
-				  </div>
-				  </sec:authorize>
 		
 				  
 				</div>

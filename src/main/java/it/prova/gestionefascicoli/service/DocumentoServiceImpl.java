@@ -12,11 +12,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.prova.gestionefascicoli.model.Documento;
 import it.prova.gestionefascicoli.repository.DocumentoRepository;
 
+@Service
 public class DocumentoServiceImpl implements DocumentoService {
 
 	@Autowired
@@ -76,7 +78,7 @@ public class DocumentoServiceImpl implements DocumentoService {
 				predicates
 						.add(cb.greaterThanOrEqualTo(root.get("dataUltimaModifica"), example.getDataUltimaModifica()));
 
-			if (example.getFascicolo() != null && example.getFascicolo().getId() != null) 
+			if (example.getFascicolo() != null && example.getFascicolo().getId() != null)
 				predicates.add(cb.equal(cb.upper(root.get("fascicolo")), example.getFascicolo().getId()));
 
 			return cb.and(predicates.toArray(new Predicate[predicates.size()]));

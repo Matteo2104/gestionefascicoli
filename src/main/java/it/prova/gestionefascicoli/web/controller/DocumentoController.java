@@ -18,23 +18,24 @@ import it.prova.gestionefascicoli.service.DocumentoService;
 public class DocumentoController {
 	@Autowired
 	private DocumentoService documentoService;
-	
+
 	@GetMapping("/insert")
 	public String insert(Model model) {
 		model.addAttribute("insert_documento_attr", new DocumentoDTO());
 		return "documento/insert";
 	}
+
 	@PostMapping("/save")
-	public String save(@Valid 
-			@ModelAttribute("insert_documento_attr") DocumentoDTO documentoDTO,
-			BindingResult result, Model model, RedirectAttributes redirectAttrs) {
-		
-		if (result.hasErrors()) 
+	public String save(@Valid @ModelAttribute("insert_documento_attr") DocumentoDTO documentoDTO, BindingResult result,
+			Model model, RedirectAttributes redirectAttrs) {
+
+		if (result.hasErrors())
 			return "documento/insert";
-		
+
 		documentoService.inserisciNuovo(documentoDTO.buildDocumentoModel());
 
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/documento";
 	}
+
 }
