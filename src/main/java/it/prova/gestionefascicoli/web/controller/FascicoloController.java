@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import it.prova.gestionefascicoli.dto.FascicoloDTO;
 import it.prova.gestionefascicoli.service.FascicoloService;
 
 @Controller
@@ -31,7 +32,7 @@ public class FascicoloController {
 
 	@PostMapping("/find")
 	public String find(FascicoloDTO example, Model model) {
-		model.addAttribute("list_fascicolo_attr", fascicoloService.findByExample(example));
+		model.addAttribute("list_fascicolo_attr", fascicoloService.findByExample(example.buildFascicoloModel(), null, null, null));
 		return "fascicolo/list";
 	}
 }
