@@ -20,17 +20,17 @@ public class FascicoloController {
 	public String listAll(Model model) {
 		model.addAttribute("list_fascicolo_attr", fascicoloService.listAll());
 		
-		return "list";
+		return "fascicolo/list";
 	}
 	
 	// CICLO RICERCA
 	@GetMapping("/search")
 	public String search() {
-		return "search";
+		return "fascicolo/search";
 	}
 	@PostMapping("/find")
 	public String find(FascicoloDTO example, Model model) {
 		model.addAttribute("list_fascicolo_attr", fascicoloService.findByExample(example));
-		return "list";
+		return "fasciolo/list";
 	}
 }
