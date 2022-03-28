@@ -33,7 +33,7 @@ public class FascicoloController {
 	@PostMapping("/find")
 	public String find(FascicoloDTO example, Model model) {
 		model.addAttribute("list_fascicolo_attr",
-				fascicoloService.findByExample(example.buildFascicoloModel(), null, null, null));
+				FascicoloDTO.createFascicoloDTOListFromModelList(fascicoloService.findByExample(example.buildFascicoloModel(), null, null, null).toList()));
 		return "fascicolo/list";
 	}
 
