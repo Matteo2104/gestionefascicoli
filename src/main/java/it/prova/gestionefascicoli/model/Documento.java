@@ -33,7 +33,15 @@ public class Documento {
 	private Boolean riservato;
 
 	@Lob
-	private byte[] payload;
+	private byte[] fileAllegato;
+
+	public byte[] getFileAllegato() {
+		return fileAllegato;
+	}
+
+	public void setFileAllegato(byte[] fileAllegato) {
+		this.fileAllegato = fileAllegato;
+	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fascicolo_id", nullable = false)
