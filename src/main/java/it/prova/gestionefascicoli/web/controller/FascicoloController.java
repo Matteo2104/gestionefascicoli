@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.prova.gestionefascicoli.dto.FascicoloDTO;
+import it.prova.gestionefascicoli.exceptions.FascicoloConDocumentiException;
+import it.prova.gestionefascicoli.exceptions.FascicoloNotFoundException;
 import it.prova.gestionefascicoli.model.Fascicolo;
 import it.prova.gestionefascicoli.service.FascicoloService;
 
@@ -79,6 +82,24 @@ public class FascicoloController {
 		}
 		fascicoloService.inserisciNuovo(fascicoloDTO.buildFascicoloModel());
 
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "redirect:/fascicolo";
+	}
+
+	@PostMapping("/delete")
+	public String delete(@RequestParam(name = "idFascicoloToDelete", required = true) Long idFascicolo,
+			RedirectAttributes redirectAttrs) {
+
+		try {
+			fascicoloService.rimuoviFascicolo(idFascicolo);
+		} catch (FascicoloNotFoundException e) {
+			redirectAttrs.addFlashAttribute("errorMessage", "Impossibile trovare il fascicolo da rimuovere!");
+			return "redirect:/fascicolo";
+		} catch (FascicoloConDocumentiException e) {
+			redirectAttrs.addFlashAttribute("errorMessage",
+					"Il fascicolo che tenti di eliminare ha dei documenti associati!");
+			return "redirect:/contribuente";
+		}
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/fascicolo";
 	}

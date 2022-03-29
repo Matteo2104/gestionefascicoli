@@ -16,6 +16,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import it.prova.gestionefascicoli.exceptions.FascicoloConDocumentiException;
+import it.prova.gestionefascicoli.exceptions.FascicoloNotFoundException;
 import it.prova.gestionefascicoli.model.Fascicolo;
 import it.prova.gestionefascicoli.repository.FascicoloRepository;
 
@@ -105,6 +107,21 @@ public class FascicoloServiceImpl implements FascicoloService {
 		fascicoloInstance.setDataCreazione(new Date());
 		fascicoloInstance.setDataUltimaModifica(new Date());
 		repository.save(fascicoloInstance);
+	}
+
+	@Override
+	public void rimuoviFascicolo(Long id) {
+		Fascicolo toRemove = repository.findByIdEager(id).orElse(null);
+
+		if (toRemove == null) {
+			throw new FascicoloNotFoundException("Fascicolo non trovato");
+		}
+
+		if (!toRemove.getDocumenti().isEmpty()) {
+			throw new FascicoloConDocumentiException("Il fascicolo da rimuovere ha dei documenti al suo interno");
+		}
+
+		repository.deleteById(id);
 	}
 
 }

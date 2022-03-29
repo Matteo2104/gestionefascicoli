@@ -52,8 +52,8 @@
 										<td>
 											<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/fascicolo/show/${fascicoloItem.id }">Visualizza</a>
 											<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="${pageContext.request.contextPath}/fascicolo/edit/${fascicoloItem.id }">Edit</a>
-											<a class="btn  btn-sm btn-outline-danger ml-2 mr-2" href="${pageContext.request.contextPath}/fascicolo/delete/${fascicoloItem.id }">Edit</a>
-										</td>
+											<a id="deleteFascicoloLink_#_${richiestaItem.id }" class="btn btn-outline-danger btn-sm link-for-modal" data-bs-toggle="modal" data-bs-target="#confirmOperationModal1">Delete</a>
+										</td>			 
 										
 										
 										
@@ -75,69 +75,35 @@
 	
 	
 	<!-- Modal -->
-	<div class="modal fade" id="confirmOperationModal" tabindex="-1"  aria-labelledby="confirmOperationModalLabel"
+	<div class="modal fade" id="confirmOperationModal1" tabindex="-1"  aria-labelledby="confirmOperationModalLabel"
 	    aria-hidden="true">
 	    <div class="modal-dialog" >
 	        <div class="modal-content">
 	            <div class="modal-header">
-	                <h5 class="modal-title" id="confirmOperationModalLabel">Conferma Operazione</h5>
+	                <h5 class="modal-title" id="confirmOperationModalLabel1">Conferma Operazione</h5>
 	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	            </div>
 	            <div class="modal-body">
-	                Continuare con l'operazione?
+	                Continuare con l'operazione? 
 	            </div>
-	            <form method="post" action="${pageContext.request.contextPath}/utente/cambiaStato" >
+	            <form method="post" action="${pageContext.request.contextPath}/fascicolo/delete" >
 		            <div class="modal-footer">
-		            	<input type="hidden" name="idUtenteForChangingStato" id="idUtenteForChangingStato">
+		            	<input type="hidden" name="idFascicoloToDelete" id="idFascicoloToDelete">
 		                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-		                <input type="submit" value="Continua"  class="btn btn-primary">
+		                <input type="submit" value="Continua"  class="btn btn-danger">
 		            </div>
 	            </form>
 	        </div>
 	    </div>
 	</div>
-	<!-- end Modal -->
-	<script type="text/javascript">
-		<!-- aggancio evento click al conferma del modal  -->
-		$(".link-for-modal").click(function() {
-			<!-- mi prendo il numero che poi sarà l'id. Il 18 è perché 'changeStatoLink_#_' è appunto lungo 18  -->
-			var callerId = $(this).attr('id').substring(18);
-			<!-- imposto nell'hidden del modal l'id da postare alla servlet -->
-			$('#idUtenteForChangingStato').val(callerId);
-		});
-	</script>
 	
-	
-	<!-- Modal -->
-	<div class="modal fade" id="confirmOperationModal2" tabindex="-1"  aria-labelledby="confirmOperationModalLabel2"
-	    aria-hidden="true">
-	    <div class="modal-dialog" >
-	        <div class="modal-content">
-	            <div class="modal-header">
-	                <h5 class="modal-title" id="confirmOperationModalLabel2">Conferma Operazione</h5>
-	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	            </div>
-	            <div class="modal-body">
-	                Sei sicuro di voler Resettare la password a questo utente?
-	            </div>
-	            <form method="post" action="${pageContext.request.contextPath}/utente/adminReset" >
-		            <div class="modal-footer">
-		            	<input type="hidden" name="idUtenteForResetPassword" id="idUtenteForResetPassword">
-		                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-		                <input type="submit" value="Continua"  class="btn btn-primary">
-		            </div>
-	            </form>
-	        </div>
-	    </div>
-	</div>
-	<!-- end Modal -->
-	<script type="text/javascript">
+		<script type="text/javascript">
 		<!-- aggancio evento click al conferma del modal  -->
 		$(".link-for-modal").click(function(){
-			<!-- mi prendo il numero che poi sarà l'id. Il 20 è perché 'resetPasswordLink_#_' è appunto lungo 20  -->
-			var callerId = $(this).attr('id').substring(20);
+			<!-- mi prendo il numero che poi sarà l'id. Il 18 è perché 'changeStatoLink_#_' è appunto lungo 18  -->
+			var callerId = $(this).attr('id').substring(22);
 			<!-- imposto nell'hidden del modal l'id da postare alla servlet -->
-			$('#idUtenteForResetPassword').val(callerId);
+			$('#idRichiestaToDelete').val(callerId);
 		});
 	</script>
 	

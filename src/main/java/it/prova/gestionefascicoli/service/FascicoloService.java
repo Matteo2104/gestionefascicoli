@@ -22,4 +22,6 @@ public interface FascicoloService {
 	public Page<Fascicolo> findByExample(Fascicolo example, Integer pageNo, Integer pageSize, String sortBy);
 
 	public void inserisciFascicoloConDate(Fascicolo fascicoloInstance);
+
+	public void rimuoviFascicolo(Long id);
 }
