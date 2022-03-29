@@ -1,6 +1,7 @@
 package it.prova.gestionefascicoli.web.controller;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,5 +69,31 @@ public class DocumentoController {
 
 	}
 	
+	
+	// CICLO MODIFICA
+	@GetMapping("/edit/{idDocumento}")
+	public String edit(@PathVariable(required = true) Long idDocumento, Model model) {
+		DocumentoDTO documentoDTO = DocumentoDTO
+				.buildDocumentoDTOFromModel(documentoService.caricaSingoloElemento(idDocumento));
+
+		// System.out.println(richiestaPermesso);
+
+		model.addAttribute("edit_documento_attr", documentoDTO);
+		model.addAttribute("errorMessage", "Operazione non autorizzata!!");
+		return "permesso";
+	}
+	@PostMapping("/update")
+	public String update(@ModelAttribute("edit_documento_attr") DocumentoDTO documentoDTO, BindingResult result,
+			Model model, RedirectAttributes redirectAttrs, HttpServletRequest request) {
+
+		if (result.hasErrors()) {
+			return "permesso/edit";
+		}
+
+		documentoService.aggiorna(documentoDTO.buildDocumentoModel());
+
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "redirect:/documento";
+	}
 
 }

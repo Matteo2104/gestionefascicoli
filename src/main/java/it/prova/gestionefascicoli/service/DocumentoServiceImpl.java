@@ -40,6 +40,7 @@ public class DocumentoServiceImpl implements DocumentoService {
 	@Override
 	@Transactional
 	public void aggiorna(Documento documentoInstance) {
+		documentoInstance.setDataUltimaModifica(new Date());
 		repository.save(documentoInstance);
 	}
 
