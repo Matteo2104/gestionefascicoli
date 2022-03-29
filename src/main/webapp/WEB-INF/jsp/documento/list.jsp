@@ -53,7 +53,7 @@
 										<td>
 											<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/documento/show/${documentoItem.id }">Visualizza</a>
 											<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="${pageContext.request.contextPath}/documento/edit/${documentoItem.id }">Edit</a>
-											<a class="btn  btn-sm btn-outline-danger ml-2 mr-2" href="${pageContext.request.contextPath}/documento/delete/${documentoItem.id }">Elimina</a>
+											<a id="changeStatoLink_#_${documentoItem.id }" class="btn btn-outline-danger btn-sm link-for-modal" data-bs-toggle="modal" data-bs-target="#confirmOperationModal"  >Elimina</a>
 										</td>
 										
 										
@@ -75,6 +75,8 @@
 	
 	
 	
+	
+	
 	<!-- Modal -->
 	<div class="modal fade" id="confirmOperationModal" tabindex="-1"  aria-labelledby="confirmOperationModalLabel"
 	    aria-hidden="true">
@@ -87,9 +89,9 @@
 	            <div class="modal-body">
 	                Continuare con l'operazione?
 	            </div>
-	            <form method="post" action="${pageContext.request.contextPath}/utente/cambiaStato" >
+	            <form method="post" action="${pageContext.request.contextPath}/documento/delete" >
 		            <div class="modal-footer">
-		            	<input type="hidden" name="idUtenteForChangingStato" id="idUtenteForChangingStato">
+		            	<input type="hidden" name="idDocumentoForDelete" id="idDocumentoForDelete">
 		                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
 		                <input type="submit" value="Continua"  class="btn btn-primary">
 		            </div>
@@ -104,7 +106,7 @@
 			<!-- mi prendo il numero che poi sarà l'id. Il 18 è perché 'changeStatoLink_#_' è appunto lungo 18  -->
 			var callerId = $(this).attr('id').substring(18);
 			<!-- imposto nell'hidden del modal l'id da postare alla servlet -->
-			$('#idUtenteForChangingStato').val(callerId);
+			$('#idDocumentoForDelete').val(callerId);
 		});
 	</script>
 	

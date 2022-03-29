@@ -137,4 +137,9 @@ public class DocumentoController {
 		return "redirect:/documento";
 	}
 
+	@PostMapping("/delete")
+	public String delete(@RequestParam(name = "idDocumentoForDelete", required = true) Long idDocumento) {
+		documentoService.rimuovi(new Documento(idDocumento));
+		return "redirect:/documento";
+	}
 }
