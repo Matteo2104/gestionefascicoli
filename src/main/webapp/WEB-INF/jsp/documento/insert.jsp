@@ -15,8 +15,8 @@
 			.error_field {
 		        color: red; 
 		    }
-		</style> 
-	   
+
+		</style>
 	   <title>Inserisci Nuovo Documento</title>
 	 </head>
 	   <body class="d-flex flex-column h-100">
@@ -44,7 +44,7 @@
 			  
 			  <div class='card'>
 				    <div class='card-header'>
-				        <h5>Inserisci nuovo utente</h5> 
+				        <h5>Inserisci nuovo documento</h5> 
 				    </div>
 				    <div class='card-body'>
 		
@@ -69,45 +69,45 @@
 									</spring:bind>
 									<form:errors  path="descrizione" cssClass="error_field" />
 								</div>
-							
 								
 								<!--  
-								 <div class="form-check">
-									  <input class="form-check-input" type="checkbox" value="${true }" id="riservato" >
-									  <label class="form-check-label" for="riservato">
-									    Riservato
-									  </label>
-									</div>
-								-->
-									
 								<div class="col-md-3">
-									<label for="riservato" class="form-label">Riservato <span class="text-danger">*</span></label>
-									    <select class="form-select " id="riservato" name="riservato" required >
-									    	<option value="" selected> - Selezionare - </option>
-									      	<option value="${true }" >Si</option>
-									    	<option value="${false }">No</option>
+									<div class="form-check">
+										<input class="form-check-input" name="privato" type="checkbox" id="privato" >
+										<label class="form-check-label" for="privato" >
+											Privato
+										</label>
+									</div>
+								</div>
+								-->
+								
+								<div class="col-md-3" >
+										<label for="riservato" class="form-label">Riservato <span class="text-danger">*</span></label>
+										<spring:bind path="riservato">
+								    	<select class="form-select" id="riservato" name="riservato">
+								    		<option value="${false }" selected> - Selezionare - </option>
+								      		<option value="${true }" >Si</option>
+								      		<option value="${false }">No</option>
 								    	</select>
+								    	</spring:bind>
+									<form:errors  path="riservato" cssClass="error_field" />
 								</div>
-									
 								
-									
-								<div class="col-md-6" id="fileAllegato">
+								<div id="fileAllegato" class="col-md-8">
 									  <label for="fileAllegato" class="form-label">Allegato <span class="text-danger">*</span></label>
-									  <input class="form-control" type="file" id="fileAllegato" name="fileAllegato" >
+									  <input class="form-control" type="file" id="fileAllegato" name="fileAllegato" required>
 								</div>
 								
-								<!-- FORM PER L'INSERIMENTO DEL FASCICOLO -->
 								<div class="col-md-6">
-										<label for="fascicoloSearchInput" class="form-label">Fascicolo</label>
-											<input class="form-control ${status.error ? 'is-invalid' : ''}" type="text" id="fascicoloSearchInput"
-												name="fascicoloInput" value="${insert_documento_attr.fascicolo.codice}">
-										<input type="hidden" name="fascicolo.id" id="fascicoloId" value="${insert_documento_attr.fascicolo.id}">
+									<label for="fascicoloSearchInput" class="form-label">Fascicolo:</label>
+									<spring:bind path="fascicolo">
+										<input class="form-control ${status.error ? 'is-invalid' : ''}" type="text" id="fascicoloSearchInput"
+											name="fascicoloInput" value="${insert_documento_attr.fascicolo.codice}${empty insert_documento_attr.fascicolo.codice?'':' '}">
+									</spring:bind>
+									<input type="hidden" name="fascicolo.id" id="fascicoloId" value="${insert_documento_attr.fascicolo.id}">
+									<form:errors  path="fascicolo" cssClass="error_field" />
 								</div>
-								
-								
-								
-								
-								
+							
 								
 								<div class="col-12">
 									<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>
@@ -115,6 +115,48 @@
 								</div>
 		
 						</form:form>
+						
+						<%-- FUNZIONE JQUERY UI PER AUTOCOMPLETE --%>
+								<script>
+									$("#fascicoloSearchInput").autocomplete({
+										 source: function(request, response) {
+											 	//quando parte la richiesta ajax devo ripulire registaId
+											 	//altrimenti quando modifico il campo, cancellando
+											 	//qualche carattere, mi rimarrebbe comunque valorizzato il 
+											 	//'vecchio id'
+											 	$('#fascicoloId').val('');
+											 	
+										        $.ajax({
+										            url: "${pageContext.request.contextPath}/fascicolo/searchFascicoliAjax",
+										            datatype: "json",
+										            data: {
+										                term: request.term,   
+										            },
+										            success: function(data) {
+										                response($.map(data, function(item) {
+										                    return {
+											                    label: item.label,
+											                    value: item.value
+										                    }
+										                }))
+										            }
+										        });
+										    },
+										//quando seleziono la voce nel campo deve valorizzarsi la descrizione
+									    focus: function(event, ui) {
+									        $("#fascicoloSearchInput").val(ui.item.label);
+									        return false;
+									    },
+									    minLength: 2,
+									    //quando seleziono la voce nel campo hidden deve valorizzarsi l'id
+									    select: function( event, ui ) {
+									    	$('#fascicoloId').val(ui.item.value);
+									    	//console.log($('#registaId').val())
+									        return false;
+									    }
+									});
+								</script>
+								<!-- end script autocomplete -->
   
 				    <%-- FUNZIONE JQUERY UI PER AUTOCOMPLETE --%>
 								<script>

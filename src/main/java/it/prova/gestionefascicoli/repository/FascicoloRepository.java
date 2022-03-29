@@ -13,6 +13,7 @@ public interface FascicoloRepository
 		extends PagingAndSortingRepository<Fascicolo, Long>, JpaSpecificationExecutor<Fascicolo> {
 	@Query("from Fascicolo f left join fetch f.documenti d where f.id = ?1")
 	public Optional<Fascicolo> findByIdEager(Long idFascicolo);
-	
-	public List<Fascicolo> findByCodiceIgnoreCaseContaining(String term);
+
+	@Query("from Fascicolo f where f.codice like %?1%")
+	List<Fascicolo> findByCodice(String codice);
 }

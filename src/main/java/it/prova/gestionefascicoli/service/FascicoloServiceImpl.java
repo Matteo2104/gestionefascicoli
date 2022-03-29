@@ -26,12 +26,6 @@ public class FascicoloServiceImpl implements FascicoloService {
 
 	@Autowired
 	private FascicoloRepository repository;
-	
-	@Override
-	@Transactional
-	public List<Fascicolo> cercaByCodiceILike(String term) {
-		return repository.findByCodiceIgnoreCaseContaining(term);
-	}
 
 	@Override
 	@Transactional(readOnly = true)
@@ -128,6 +122,12 @@ public class FascicoloServiceImpl implements FascicoloService {
 		}
 
 		repository.deleteById(id);
+	}
+
+	@Transactional(readOnly = true)
+	public List<Fascicolo> cercaByCodiceILike(String term) {
+		System.out.println("TERM: " + term);
+		return repository.findByCodice(term);
 	}
 
 }

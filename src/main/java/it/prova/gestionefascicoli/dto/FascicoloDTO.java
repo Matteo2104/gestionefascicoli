@@ -88,6 +88,7 @@ public class FascicoloDTO {
 	}
 
 	public Fascicolo buildFascicoloModel() {
+		System.out.println("SEI DENTRO");
 		return new Fascicolo(this.id, this.codice, this.descrizione, this.dataCreazione, this.dataUltimaModifica);
 	}
 

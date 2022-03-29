@@ -1,6 +1,5 @@
 package it.prova.gestionefascicoli.web.controller;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,17 +13,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 
 import it.prova.gestionefascicoli.dto.FascicoloDTO;
 import it.prova.gestionefascicoli.exceptions.FascicoloConDocumentiException;
@@ -50,27 +46,20 @@ public class FascicoloController {
 
 	// CICLO RICERCA
 	@GetMapping("/search")
-	public String search() {
+	public String search(Model model) {
+		model.addAttribute("path", "gestioneFascicoli");
 		return "fascicolo/search";
 	}
 
 	@PostMapping("/find")
 	public String find(FascicoloDTO example, Model model) {
-		List<FascicoloDTO> listaFascicoli = FascicoloDTO.createFascicoloDTOListFromModelList(
-				fascicoloService.findByExample(example.buildFascicoloModel(), null, null, null).toList());
-		
-		/*
-		for (FascicoloDTO fascicolo : listaFascicoli) {
-			System.out.println(fascicolo);
-		}
-		*/
-		
-		model.addAttribute("list_fascicolo_attr", listaFascicoli);
+
+		model.addAttribute("list_fascicolo_attr", FascicoloDTO.createFascicoloDTOListFromModelList(
+				fascicoloService.findByExample(example.buildFascicoloModel(), null, null, null).toList()));
+		model.addAttribute("path", "gestioneFascicoli");
 		return "fascicolo/list";
 	}
-	
-	
-	
+
 	@GetMapping(value = "/searchFascicoliAjax", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public @ResponseBody String searchFascicolo(@RequestParam String term) {
 
@@ -91,17 +80,16 @@ public class FascicoloController {
 		return new Gson().toJson(ja);
 	}
 	/*
-	@GetMapping("/show/{idFascicolo}")
-	public String showDipendente(@PathVariable(required = true) Long idFascicolo, Model model) {
-		model.addAttribute("show_fascicolo_attr",
-				FascicoloDTO.buildFascicoloDTOFromModel(fascicoloService.caricaSingoloElementoEager(idFascicolo)));
-		model.addAttribute("path", "gestioneFascicoli");
+	 * @GetMapping("/show/{idFascicolo}") public String
+	 * showDipendente(@PathVariable(required = true) Long idFascicolo, Model model)
+	 * { model.addAttribute("show_fascicolo_attr",
+	 * FascicoloDTO.buildFascicoloDTOFromModel(fascicoloService.
+	 * caricaSingoloElementoEager(idFascicolo))); model.addAttribute("path",
+	 * "gestioneFascicoli");
+	 * 
+	 * return "fascicolo/show"; }
+	 */
 
-		return "fascicolo/show";
-	}
-	*/
-	
-	
 	@GetMapping("/insert")
 	public String create(Model model) {
 		model.addAttribute("fascicolo_totali_attr",
@@ -128,16 +116,14 @@ public class FascicoloController {
 		return "redirect:/fascicolo";
 	}
 
-
 	// CICLO VISUALIZZA
 	@GetMapping("/show/{idFascicolo}")
 	public String show(@PathVariable(required = true) Long idFascicolo, Model model) {
-		
-		
+
 		model.addAttribute("show_fascicolo_attr", fascicoloService.caricaSingoloElementoEager(idFascicolo));
 		return "fascicolo/show";
 	}
-		
+
 	@PostMapping("/delete")
 	public String delete(@RequestParam(name = "idFascicoloToDelete", required = true) Long idFascicolo,
 			RedirectAttributes redirectAttrs) {

@@ -1,6 +1,5 @@
 package it.prova.gestionefascicoli.model;
 
-import java.util.Arrays;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -36,6 +35,10 @@ public class Documento {
 	@Lob
 	private byte[] fileAllegato;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "fascicolo_id", nullable = false)
+	private Fascicolo fascicolo;
+
 	public byte[] getFileAllegato() {
 		return fileAllegato;
 	}
@@ -44,10 +47,6 @@ public class Documento {
 		this.fileAllegato = fileAllegato;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fascicolo_id", nullable = false)
-	private Fascicolo fascicolo;
-
 	public Documento() {
 		super();
 	}
@@ -55,6 +54,17 @@ public class Documento {
 	public Documento(Long id) {
 		super();
 		this.id = id;
+	}
+
+	public Documento(Long id, String codice, String descrizione, Date dataCreazione, Date dataUltimaModifica,
+			Boolean riservato) {
+		super();
+		this.id = id;
+		this.codice = codice;
+		this.descrizione = descrizione;
+		this.dataCreazione = dataCreazione;
+		this.dataUltimaModifica = dataUltimaModifica;
+		this.riservato = riservato;
 	}
 
 	public Documento(String codice, String descrizione, Date dataCreazione, Boolean riservato, Fascicolo fascicolo) {
@@ -148,8 +158,7 @@ public class Documento {
 	@Override
 	public String toString() {
 		return "Documento [id=" + id + ", codice=" + codice + ", descrizione=" + descrizione + ", dataCreazione="
-				+ dataCreazione + ", dataUltimaModifica=" + dataUltimaModifica + ", riservato=" + riservato
-				+ ", fileAllegato=" + Arrays.toString(fileAllegato) + ", fascicolo=" + fascicolo + "]";
+				+ dataCreazione + ", dataUltimaModifica=" + dataUltimaModifica + ", riservato=" + riservato + "]";
 	}
 
 }
