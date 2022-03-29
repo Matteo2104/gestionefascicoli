@@ -13,13 +13,13 @@ public class FascicoloDTO {
 	private Long id;
 	@NotBlank(message = "{codice.notblank}")
 	private String codice;
-	
+
 	@NotBlank(message = "{descrizione.notblank}")
 	private String descrizione;
 
 	private Date dataCreazione;
 
-	private Date dataUltimaModifica;
+	private Date dataChiusura;
 
 	public FascicoloDTO() {
 		super();
@@ -38,13 +38,13 @@ public class FascicoloDTO {
 		this.dataCreazione = dataCreazione;
 	}
 
-	public FascicoloDTO(Long id, String codice, String descrizione, Date dataCreazione, Date dataUltimaModifica) {
+	public FascicoloDTO(Long id, String codice, String descrizione, Date dataCreazione, Date dataChiusura) {
 		super();
 		this.id = id;
 		this.codice = codice;
 		this.descrizione = descrizione;
 		this.dataCreazione = dataCreazione;
-		this.dataUltimaModifica = dataUltimaModifica;
+		this.dataChiusura = dataChiusura;
 	}
 
 	public Long getId() {
@@ -79,22 +79,21 @@ public class FascicoloDTO {
 		this.dataCreazione = dataCreazione;
 	}
 
-	public Date getDataUltimaModifica() {
-		return dataUltimaModifica;
+	public Date getDataChiusura() {
+		return dataChiusura;
 	}
 
-	public void setDataUltimaModifica(Date dataUltimaModifica) {
-		this.dataUltimaModifica = dataUltimaModifica;
+	public void setDataChiusura(Date dataChiusura) {
+		this.dataChiusura = dataChiusura;
 	}
 
 	public Fascicolo buildFascicoloModel() {
-		System.out.println("SEI DENTRO");
-		return new Fascicolo(this.id, this.codice, this.descrizione, this.dataCreazione, this.dataUltimaModifica);
+		return new Fascicolo(this.id, this.codice, this.descrizione, this.dataCreazione, this.dataChiusura);
 	}
 
 	public static FascicoloDTO buildFascicoloDTOFromModel(Fascicolo fascicoloModel) {
 		return new FascicoloDTO(fascicoloModel.getId(), fascicoloModel.getCodice(), fascicoloModel.getDescrizione(),
-				fascicoloModel.getDataCreazione(), fascicoloModel.getDataUltimaModifica());
+				fascicoloModel.getDataCreazione(), fascicoloModel.getDataChiusura());
 	}
 
 	public static List<FascicoloDTO> createFascicoloDTOListFromModelList(List<Fascicolo> modelListInput) {

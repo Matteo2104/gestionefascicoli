@@ -45,8 +45,8 @@
 			    	</dl>
 			    	
 			    	<dl class="row">
-					  <dt class="col-sm-3 text-right">Data Ultima Modifica:</dt>
-					  <dd class="col-sm-9"><fmt:formatDate type = "date" value = "${show_fascicolo_attr.dataUltimaModifica}" /></dd>
+					  <dt class="col-sm-3 text-right">Data Chiusura:</dt>
+					  <dd class="col-sm-9"><fmt:formatDate type = "date" value = "${show_fascicolo_attr.dataChiusura}" /></dd>
 			    	</dl>
 			    	
 			    	

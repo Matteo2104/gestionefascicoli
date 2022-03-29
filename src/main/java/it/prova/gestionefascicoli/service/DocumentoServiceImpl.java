@@ -56,18 +56,16 @@ public class DocumentoServiceImpl implements DocumentoService {
 		documentoInstance.setDataUltimaModifica(new Date());
 		repository.save(documentoInstance);
 	}
-	
+
 	@Override
 	@Transactional
 	public void inserisciNuovoConDate(Documento documentoInstance) {
-		System.out.println(documentoInstance);
-		
 		Date data = new Date();
-		
+
 		documentoInstance.setDataCreazione(data);
 		documentoInstance.setDataUltimaModifica(data);
-		
-		//repository.save(documentoInstance);
+
+		// repository.save(documentoInstance);
 	}
 
 	@Override

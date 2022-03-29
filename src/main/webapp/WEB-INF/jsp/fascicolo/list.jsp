@@ -1,5 +1,6 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html lang="it" class="h-100">
 <head>
@@ -39,7 +40,7 @@
 			                    <tr>
 			                        <th>Codice</th>
 			                        <th>Data Creazione</th>
-			                        <th>Data Ultima modifica</th>
+			                        <th>Data Chiusura</th>
 			                        <th>Azioni</th>
 			                    </tr>
 			                </thead>
@@ -47,16 +48,13 @@
 			                	<c:forEach items="${list_fascicolo_attr }" var="fascicoloItem">
 									<tr>
 										<td>${fascicoloItem.codice }</td>
-										<td>${fascicoloItem.dataCreazione }</td>
-										<td>${fascicoloItem.dataUltimaModifica }</td>
+										<td><fmt:formatDate pattern='yyyy-MM-dd' type='date' value='${fascicoloItem.dataCreazione}' /></td>
+										<td><fmt:formatDate pattern='yyyy-MM-dd' type='date' value='${fascicoloItem.dataChiusura}' /></td>
 										<td>
 											<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/fascicolo/show/${fascicoloItem.id }">Visualizza</a>
 											<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="${pageContext.request.contextPath}/fascicolo/edit/${fascicoloItem.id }">Edit</a>
 											<a id="deleteFascicoloLink_#_${fascicoloItem.id }" class="btn btn-outline-danger btn-sm link-for-modal" data-bs-toggle="modal" data-bs-target="#confirmOperationModal1">Delete</a>
 										</td>			 
-
-										
-										
 										
 									</tr>
 								</c:forEach>

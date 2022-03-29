@@ -1,5 +1,6 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html lang="it" class="h-100">
 <head>
@@ -47,12 +48,12 @@
 			                	<c:forEach items="${documento_list_attribute }" var="documentoItem">
 									<tr>
 										<td>${documentoItem.codice }</td>
-										<td>${documentoItem.dataCreazione }</td>
-										<td>${documentoItem.dataUltimaModifica }</td>
+										<td><fmt:formatDate pattern='yyyy-MM-dd' type='date' value='${documentoItem.dataCreazione}' /></td>
+										<td><fmt:formatDate pattern='yyyy-MM-dd' type='date' value='${documentoItem.dataUltimaModifica}' /></td>
 										<td>
 											<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/documento/show/${documentoItem.id }">Visualizza</a>
 											<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="${pageContext.request.contextPath}/documento/edit/${documentoItem.id }">Edit</a>
-											<a class="btn  btn-sm btn-outline-danger ml-2 mr-2" href="${pageContext.request.contextPath}/documento/delete/${documentoItem.id }">Edit</a>
+											<a class="btn  btn-sm btn-outline-danger ml-2 mr-2" href="${pageContext.request.contextPath}/documento/delete/${documentoItem.id }">Elimina</a>
 										</td>
 										
 										
