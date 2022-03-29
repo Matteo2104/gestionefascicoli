@@ -7,17 +7,13 @@
 	 
 	 	<!-- Common imports in pages -->
 	 	<jsp:include page="../header.jsp" />
-	   <link rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/jqueryUI/jquery-ui.min.css" />
-		<style>
-			.ui-autocomplete-loading {
-				background: white url("../assets/img/jqueryUI/anim_16x16.gif") right center no-repeat;
-			}
-			.error_field {
+	 	 <style>
+		    .error_field {
 		        color: red; 
 		    }
-
 		</style>
-	   <title>Inserisci Nuovo Documento</title>
+	   
+	   <title>Modifica Elemento</title>
 	 </head>
 	   <body class="d-flex flex-column h-100">
 	   
@@ -30,7 +26,7 @@
 			  <div class="container">
 			  
 			  		<%-- se l'attributo in request ha errori --%>
-					<spring:hasBindErrors  name="insert_documento_attr">
+					<spring:hasBindErrors  name="edit_fascicolo_attr">
 						<%-- alert errori --%>
 						<div class="alert alert-danger " role="alert">
 							Attenzione!! Sono presenti errori di validazione
@@ -44,56 +40,53 @@
 			  
 			  <div class='card'>
 				    <div class='card-header'>
-				        <h5>Inserisci nuovo documento</h5> 
+				        <h5>Inserisci nuovo elemento</h5> 
 				    </div>
 				    <div class='card-body'>
 		
 							<h6 class="card-title">I campi con <span class="text-danger">*</span> sono obbligatori</h6>
 		
 		
-							<form:form modelAttribute="insert_documento_attr" method="post" action="save" novalidate="novalidate" class="row g-3">
-					
+							<form:form modelAttribute="edit_fascicolo_attr" method="post" action="${pageContext.request.contextPath}/fascicolo/update" novalidate="novalidate" class="row g-3">
+								<input type="hidden" name="id" value="${edit_fascicolo_attr.id }">
 							
-								<div class="col-md-6">
+								<div class="col-md-3">
 									<label for="codice" class="form-label">Codice <span class="text-danger">*</span></label>
 									<spring:bind path="codice">
-										<input type="text" name="codice" id="codice" class="form-control ${status.error ? 'is-invalid' : ''}" placeholder="Inserire il codice" value="${insert_documento_attr.codice }" required>
+										<input type="text" name="codice" id="codice" class="form-control ${status.error ? 'is-invalid' : ''}" placeholder="Inserire il codice" value="${edit_fascicolo_attr.codice }" required>
 									</spring:bind>
 									<form:errors  path="codice" cssClass="error_field" />
 								</div>
 								
-								<div class="col-md-6">
+								<div class="col-md-3">
 									<label for="descrizione" class="form-label">Descrizione <span class="text-danger">*</span></label>
 									<spring:bind path="descrizione">
-										<input type="text" name="descrizione" id="descrizione" class="form-control ${status.error ? 'is-invalid' : ''}" placeholder="Inserire la descrizione" value="${insert_documento_attr.descrizione }" required>
+										<input type="text" name="descrizione" id="descrizione" class="form-control ${status.error ? 'is-invalid' : ''}" placeholder="Inserire il descrizione" value="${edit_fascicolo_attr.descrizione }" required>
 									</spring:bind>
 									<form:errors  path="descrizione" cssClass="error_field" />
 								</div>
 								
-
-								<!--  
+								<fmt:formatDate pattern='yyyy-MM-dd' var="parsedDate" type='date' value='${edit_fascicolo_attr.dataChiusura}' />
 								<div class="col-md-3">
-									<div class="form-check">
-										<input class="form-check-input" name="privato" type="checkbox" id="privato" >
-										<label class="form-check-label" for="privato" >
-											Privato
-										</label>
-									</div>
+									<label for="dataChiusura" class="form-label">Data Chiusura <span class="text-danger">*</span></label>
+	                        		<spring:bind path="dataChiusura">
+		                        		<input class="form-control ${status.error ? 'is-invalid' : ''}" id="dataChiusura" type="date" placeholder="dd/MM/yy"
+		                            		title="formato : gg/mm/aaaa"  name="dataChiusura" required 
+		                            		value="${parsedDate}" >
+		                            </spring:bind>
+	                            	<form:errors  path="dataChiusura" cssClass="error_field" />
 								</div>
-								-->
 								
-								<div class="col-md-3" >
-										<label for="riservato" class="form-label">Riservato <span class="text-danger">*</span></label>
-										<spring:bind path="riservato">
-								    	<select class="form-select" id="riservato" name="riservato">
-								    		<option value="${false }" selected> - Selezionare - </option>
-								      		<option value="${true }" >Si</option>
-								      		<option value="${false }">No</option>
-								    	</select>
-								    	</spring:bind>
-									<form:errors  path="riservato" cssClass="error_field" />
+								<div class="col-12">
+									<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>
+									<input class="btn btn-outline-warning" type="reset" value="Ripulisci">
+									<a class="btn btn-outline-secondary ml-2" href="${pageContext.request.contextPath }/dipendente">Torna alla Lista</a>
 								</div>
-
+		
+						</form:form>
+  
+				    
+				    
 					<!-- end card-body -->			   
 				    </div>
 				<!-- end card -->

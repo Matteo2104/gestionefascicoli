@@ -1,5 +1,6 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html lang="it" class="h-100">
 <head>
@@ -47,12 +48,16 @@
 			                	<c:forEach items="${documento_list_attribute }" var="documentoItem">
 									<tr>
 										<td>${documentoItem.codice }</td>
-										<td>${documentoItem.dataCreazione }</td>
-										<td>${documentoItem.dataUltimaModifica }</td>
+										<td><fmt:formatDate pattern='yyyy-MM-dd' type='date' value='${documentoItem.dataCreazione}' /></td>
+										<td><fmt:formatDate pattern='yyyy-MM-dd' type='date' value='${documentoItem.dataUltimaModifica}' /></td>
 										<td>
 											<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/documento/show/${documentoItem.id }">Visualizza</a>
 											<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="${pageContext.request.contextPath}/documento/edit/${documentoItem.id }">Edit</a>
+<<<<<<< HEAD
 											<a class="btn  btn-sm btn-outline-danger ml-2 mr-2" href="${pageContext.request.contextPath}/documento/delete/${documentoItem.id }">Delete</a>
+=======
+											<a id="changeStatoLink_#_${documentoItem.id }" class="btn btn-outline-danger btn-sm link-for-modal" data-bs-toggle="modal" data-bs-target="#confirmOperationModal"  >Elimina</a>
+>>>>>>> 8e6f6ae191b3ee1f2675d1527b8935d01f573c36
 										</td>
 										
 										
@@ -74,6 +79,8 @@
 	
 	
 	
+	
+	
 	<!-- Modal -->
 	<div class="modal fade" id="confirmOperationModal" tabindex="-1"  aria-labelledby="confirmOperationModalLabel"
 	    aria-hidden="true">
@@ -86,9 +93,9 @@
 	            <div class="modal-body">
 	                Continuare con l'operazione?
 	            </div>
-	            <form method="post" action="${pageContext.request.contextPath}/utente/cambiaStato" >
+	            <form method="post" action="${pageContext.request.contextPath}/documento/delete" >
 		            <div class="modal-footer">
-		            	<input type="hidden" name="idUtenteForChangingStato" id="idUtenteForChangingStato">
+		            	<input type="hidden" name="idDocumentoForDelete" id="idDocumentoForDelete">
 		                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
 		                <input type="submit" value="Continua"  class="btn btn-primary">
 		            </div>
@@ -103,7 +110,7 @@
 			<!-- mi prendo il numero che poi sarà l'id. Il 18 è perché 'changeStatoLink_#_' è appunto lungo 18  -->
 			var callerId = $(this).attr('id').substring(18);
 			<!-- imposto nell'hidden del modal l'id da postare alla servlet -->
-			$('#idUtenteForChangingStato').val(callerId);
+			$('#idDocumentoForDelete').val(callerId);
 		});
 	</script>
 	

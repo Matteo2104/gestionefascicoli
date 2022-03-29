@@ -2,6 +2,8 @@ package it.prova.gestionefascicoli.web.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -79,16 +81,6 @@ public class FascicoloController {
 
 		return new Gson().toJson(ja);
 	}
-	/*
-	 * @GetMapping("/show/{idFascicolo}") public String
-	 * showDipendente(@PathVariable(required = true) Long idFascicolo, Model model)
-	 * { model.addAttribute("show_fascicolo_attr",
-	 * FascicoloDTO.buildFascicoloDTOFromModel(fascicoloService.
-	 * caricaSingoloElementoEager(idFascicolo))); model.addAttribute("path",
-	 * "gestioneFascicoli");
-	 * 
-	 * return "fascicolo/show"; }
-	 */
 
 	@GetMapping("/insert")
 	public String create(Model model) {
@@ -141,6 +133,27 @@ public class FascicoloController {
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/fascicolo";
 
+	}
+
+	@GetMapping("/edit/{idFascicolo}")
+	public String edit(@PathVariable(required = true) Long idFascicolo, Model model) {
+		Fascicolo fascicoloModel = fascicoloService.caricaSingoloElementoEager(idFascicolo);
+		model.addAttribute("edit_fascicolo_attr", FascicoloDTO.buildFascicoloDTOFromModel(fascicoloModel));
+		model.addAttribute("path", "gestioneDipendenti");
+		return "fascicolo/edit";
+	}
+
+	@PostMapping("/update")
+	public String update(@Validated @ModelAttribute("edit_fascicolo_attr") FascicoloDTO fascicoloDTO,
+			BindingResult result, Model model, RedirectAttributes redirectAttrs, HttpServletRequest request) {
+
+		if (result.hasErrors()) {
+			return "fascicolo/edit";
+		}
+		fascicoloService.aggiorna(fascicoloDTO.buildFascicoloModel());
+
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "redirect:/fascicolo";
 	}
 
 }

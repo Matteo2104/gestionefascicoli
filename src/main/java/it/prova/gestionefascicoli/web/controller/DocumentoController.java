@@ -1,11 +1,8 @@
 package it.prova.gestionefascicoli.web.controller;
 
-
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -56,8 +53,6 @@ public class DocumentoController {
 	public String listDocumenti(DocumentoDTO documentoExample, @RequestParam(defaultValue = "0") Integer pageNo,
 			@RequestParam(defaultValue = "10") Integer pageSize, @RequestParam(defaultValue = "id") String sortBy,
 			ModelMap model) {
-		System.out.println("DOCUMENTO BUILD:" + documentoExample.buildDocumentoModel(true, true));
-		System.out.println("FASCICOLO BUILD:" + documentoExample.buildDocumentoModel(true, true).getFascicolo());
 		List<Documento> dipendenti = documentoService
 				.findByExample(documentoExample.buildDocumentoModel(true, true), pageNo, pageSize, sortBy).getContent();
 		model.addAttribute("documento_list_attribute", DocumentoDTO.createDocumentoDTOListFromModelList(dipendenti));
@@ -82,17 +77,18 @@ public class DocumentoController {
 		model.addAttribute("path", "gestioneDocumenti");
 		return "documento/insert";
 	}
+
 	// per la validazione devo usare i groups in quanto nella insert devo validare
 	// la pwd, nella edit no
 	@PostMapping("/save")
 	public String save(@Validated @ModelAttribute("insert_documento_attr") DocumentoDTO documentoDTO,
 			BindingResult result, Model model, RedirectAttributes redirectAttrs) {
-		
+
 		if (result.hasErrors()) {
 			DocumentoDTO.createDocumentoDTOListFromModelList(documentoService.listAllElements());
 			return "documento/insert";
 		}
-		
+
 		if (documentoDTO.getFascicolo().getId() == null) {
 			DocumentoDTO.createDocumentoDTOListFromModelList(documentoService.listAllElements());
 			model.addAttribute("errorMessage", "È necessario inserire un fascicolo");
@@ -115,8 +111,6 @@ public class DocumentoController {
 
 	}
 
-	
-	
 	// CICLO MODIFICA
 	@GetMapping("/edit/{idDocumento}")
 	public String edit(@PathVariable(required = true) Long idDocumento, Model model) {
@@ -131,6 +125,7 @@ public class DocumentoController {
 		model.addAttribute("errorMessage", "Operazione non autorizzata!!");
 		return "documento/edit";
 	}
+
 	@PostMapping("/update")
 	public String update(@ModelAttribute("edit_documento_attr") DocumentoDTO documentoDTO, BindingResult result,
 			Model model, RedirectAttributes redirectAttrs, HttpServletRequest request) {
@@ -150,5 +145,9 @@ public class DocumentoController {
 		return "redirect:/documento";
 	}
 
-
+	@PostMapping("/delete")
+	public String delete(@RequestParam(name = "idDocumentoForDelete", required = true) Long idDocumento) {
+		documentoService.rimuovi(new Documento(idDocumento));
+		return "redirect:/documento";
+	}
 }
