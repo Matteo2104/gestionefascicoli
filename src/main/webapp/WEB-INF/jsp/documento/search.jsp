@@ -53,11 +53,75 @@
 							</div>
 							
 							<div class="col-md-6">
-								<label for="dataUltimaModifica" class="form-label">Data Ultima modifica</label>
-                        		<input class="form-control" id="dataUltimaModifica" type="date" placeholder="dd/MM/yy"
-                            		title="formato : gg/mm/aaaa"  name="dataUltimaModifica" >
+								<label for="dataChiusura" class="form-label">Data Chiusura</label>
+                        		<input class="form-control" id="dataChiusura" type="date" placeholder="dd/MM/yy"
+                            		title="formato : gg/mm/aaaa"  name="dataChiusura" >
 							</div>
 							
+							<div class="col-md-6">
+								<label for="fascicoloSearchInput" class="form-label">Fascicolo:</label>
+									<input class="form-control ${status.error ? 'is-invalid' : ''}" type="text" id="fascicoloSearchInput"
+										name="fascicoloInput" value="${insert_documento_attr.fascicolo.codice}${empty insert_documento_attr.fascicolo.codice?'':' '}">
+									<input type="hidden" name="fascicolo.id" id="fascicoloId" value="${insert_documento_attr.fascicolo.id}">
+							</div>
+						
+							<%-- FUNZIONE JQUERY UI PER AUTOCOMPLETE --%>
+								<script>
+									$("#fascicoloSearchInput").autocomplete({
+										 source: function(request, response) {
+										        $.ajax({
+										            url: "../fascicolo/searchFascicoliAjax",
+										            datatype: "json",
+										            data: {
+										                term: request.term,   
+										            },
+										            success: function(data) {
+										                response($.map(data, function(item) {
+										                    return {
+											                    label: item.label,
+											                    value: item.value
+										                    }
+										                }))
+										            }
+										        })
+										    },
+										//quando seleziono la voce nel campo deve valorizzarsi la descrizione
+									    focus: function(event, ui) {
+									        $("#fascicoloSearchInput").val(ui.item.label)
+									        return false
+									    },
+									    minLength: 2,
+									    //quando seleziono la voce nel campo hidden deve valorizzarsi l'id
+									    select: function( event, ui ) {
+									    	$('#fascicoloId').val(ui.item.value);
+									    	//console.log($('#registaId').val())
+									        return false;
+									    }
+									});
+								</script>
+								
+							<div class="col-md-6">
+								<p> Stato fascicolo </p>
+ 								<div class="form-check">
+  									<input class="form-check-input" type="radio" value = "true" name="riservato" id="flexRadioDefault1">
+  										<label class="form-check-label" for="flexRadioDefault1">
+    										Riservato
+  										</label>
+								</div>
+								<div class="form-check">
+  									<input class="form-check-input" type="radio" value = "false" name="riservato" id="flexRadioDefault2">
+  										<label class="form-check-label" for="flexRadioDefault2">
+    										Non riservato
+  										</label>
+								</div>
+								
+								<div class="form-check">
+  									<input class="form-check-input" type="radio" value ="" name="riservato" id="flexRadioDefault2">
+  										<label class="form-check-label" for="flexRadioDefault3">
+    										Entrambe
+  										</label>
+								</div>
+							</div>
 							
 							<div class="col-12">	
 								<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Cerca</button>
