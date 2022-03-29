@@ -1,20 +1,31 @@
 package it.prova.gestionefascicoli.web.controller;
 
+
 import java.util.List;
+
+import javax.validation.Valid;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import it.prova.gestionefascicoli.dto.FascicoloDTO;
 import it.prova.gestionefascicoli.model.Fascicolo;
@@ -42,8 +53,8 @@ public class FascicoloController {
 
 	@PostMapping("/find")
 	public String find(FascicoloDTO example, Model model) {
-		model.addAttribute("list_fascicolo_attr",
-				FascicoloDTO.createFascicoloDTOListFromModelList(fascicoloService.findByExample(example.buildFascicoloModel(), null, null, null).toList()));
+		model.addAttribute("list_fascicolo_attr", FascicoloDTO.createFascicoloDTOListFromModelList(
+				fascicoloService.findByExample(example.buildFascicoloModel(), null, null, null).toList()));
 		return "fascicolo/list";
 	}
 	
@@ -67,6 +78,34 @@ public class FascicoloController {
 		}
 
 		return new Gson().toJson(ja);
+	}
+
+	@GetMapping("/insert")
+	public String createFascicolo(Model model) {
+		model.addAttribute("insert_fascicolo_attr", new FascicoloDTO());
+		return "fascicolo/insert";
+	}
+
+	@PostMapping("/save")
+	public String saveRegista(@Valid @ModelAttribute("insert_fascicolo_attr") FascicoloDTO fascicoloDTO,
+			BindingResult result, RedirectAttributes redirectAttrs) {
+
+		if (result.hasErrors()) {
+			return "fascicolo/insert";
+		}
+		fascicoloService.inserisciFascicoloConDate(fascicoloDTO.buildFascicoloModel());
+
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "redirect:/fascicolo";
+	}
+
+	// CICLO VISUALIZZA
+	@GetMapping("/show/{idFascicolo}")
+	public String createFascicolo(@PathVariable(required = true) Long idFascicolo, Model model) {
+		
+		
+		model.addAttribute("show_fascicolo_attr", fascicoloService.caricaSingoloElementoEager(idFascicolo));
+		return "fascicolo/show";
 	}
 
 }

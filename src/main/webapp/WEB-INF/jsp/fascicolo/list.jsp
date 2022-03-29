@@ -52,7 +52,7 @@
 										<td>
 											<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/fascicolo/show/${fascicoloItem.id }">Visualizza</a>
 											<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="${pageContext.request.contextPath}/fascicolo/edit/${fascicoloItem.id }">Edit</a>
-											<a class="btn  btn-sm btn-outline-danger ml-2 mr-2" href="${pageContext.request.contextPath}/fascicolo/delete/${fascicoloItem.id }">Edit</a>
+											<a class="btn  btn-sm btn-outline-danger ml-2 mr-2" href="${pageContext.request.contextPath}/fascicolo/delete/${fascicoloItem.id }">Delete</a>
 										</td>
 										
 										

@@ -71,13 +71,25 @@
 								</div>
 							
 								
-							
+								<!--  
 								 <div class="form-check">
 									  <input class="form-check-input" type="checkbox" value="${true }" id="riservato" >
 									  <label class="form-check-label" for="riservato">
 									    Riservato
 									  </label>
 									</div>
+								-->
+									
+								<div class="col-md-3">
+									<label for="riservato" class="form-label">Riservato <span class="text-danger">*</span></label>
+									    <select class="form-select " id="riservato" name="riservato" required >
+									    	<option value="" selected> - Selezionare - </option>
+									      	<option value="${true }" >Si</option>
+									    	<option value="${false }">No</option>
+								    	</select>
+								</div>
+									
+								
 									
 								<div class="col-md-6" id="fileAllegato">
 									  <label for="fileAllegato" class="form-label">Allegato <span class="text-danger">*</span></label>
@@ -109,7 +121,7 @@
 									$("#fascicoloSearchInput").autocomplete({
 										 source: function(request, response) {
 										        $.ajax({
-										            url: "../fascicolo/searchFascioliAjax",
+										            url: "../fascicolo/searchFascicoliAjax",
 										            datatype: "json",
 										            data: {
 										                term: request.term,   

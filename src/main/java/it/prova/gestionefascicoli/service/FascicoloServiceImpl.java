@@ -1,6 +1,7 @@
 package it.prova.gestionefascicoli.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.criteria.Predicate;
@@ -97,6 +98,13 @@ public class FascicoloServiceImpl implements FascicoloService {
 	@Override
 	public Fascicolo caricaSingoloElementoEager(Long id) {
 		return repository.findByIdEager(id).orElse(null);
+	}
+
+	@Override
+	public void inserisciFascicoloConDate(Fascicolo fascicoloInstance) {
+		fascicoloInstance.setDataCreazione(new Date());
+		fascicoloInstance.setDataUltimaModifica(new Date());
+		repository.save(fascicoloInstance);
 	}
 
 }

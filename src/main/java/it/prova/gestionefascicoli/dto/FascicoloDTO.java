@@ -13,6 +13,7 @@ public class FascicoloDTO {
 	private Long id;
 	@NotBlank(message = "{codice.notblank}")
 	private String codice;
+	
 	@NotBlank(message = "{descrizione.notblank}")
 	private String descrizione;
 
