@@ -2,6 +2,8 @@ package it.prova.gestionefascicoli.web.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -50,8 +52,6 @@ public class DocumentoController {
 	public String listDocumenti(DocumentoDTO documentoExample, @RequestParam(defaultValue = "0") Integer pageNo,
 			@RequestParam(defaultValue = "10") Integer pageSize, @RequestParam(defaultValue = "id") String sortBy,
 			ModelMap model) {
-		System.out.println("DOCUMENTO BUILD:" + documentoExample.buildDocumentoModel(true, true));
-		System.out.println("FASCICOLO BUILD:" + documentoExample.buildDocumentoModel(true, true).getFascicolo());
 		List<Documento> dipendenti = documentoService
 				.findByExample(documentoExample.buildDocumentoModel(true, true), pageNo, pageSize, sortBy).getContent();
 		model.addAttribute("documento_list_attribute", DocumentoDTO.createDocumentoDTOListFromModelList(dipendenti));
@@ -69,7 +69,6 @@ public class DocumentoController {
 	}
 
 	@GetMapping("/insert")
-
 	public String create(Model model) {
 		model.addAttribute("documento_totali_attr",
 				DocumentoDTO.createDocumentoDTOListFromModelList(documentoService.listAllElements()));
@@ -81,13 +80,17 @@ public class DocumentoController {
 	// per la validazione devo usare i groups in quanto nella insert devo validare
 	// la pwd, nella edit no
 	@PostMapping("/save")
-
 	public String save(@Validated @ModelAttribute("insert_documento_attr") DocumentoDTO documentoDTO,
 			BindingResult result, Model model, RedirectAttributes redirectAttrs) {
-		System.out.println("DOCUMENTO: " + documentoDTO);
+
 		if (result.hasErrors()) {
 			DocumentoDTO.createDocumentoDTOListFromModelList(documentoService.listAllElements());
+			return "documento/insert";
+		}
 
+		if (documentoDTO.getFascicolo().getId() == null) {
+			DocumentoDTO.createDocumentoDTOListFromModelList(documentoService.listAllElements());
+			model.addAttribute("errorMessage", "È necessario inserire un fascicolo");
 			return "documento/insert";
 		}
 		documentoService.inserisciNuovo(documentoDTO.buildDocumentoModel(true, true));
@@ -107,4 +110,36 @@ public class DocumentoController {
 
 	}
 
+	// CICLO MODIFICA
+	@GetMapping("/edit/{idDocumento}")
+	public String edit(@PathVariable(required = true) Long idDocumento, Model model) {
+		DocumentoDTO documentoDTO = DocumentoDTO
+				.buildDocumentoDTOFromModel(documentoService.caricaSingoloElemento(idDocumento));
+
+		// System.out.println(richiestaPermesso);
+
+		model.addAttribute("edit_documento_attr", documentoDTO);
+		model.addAttribute("errorMessage", "Operazione non autorizzata!!");
+		return "permesso";
+	}
+
+	@PostMapping("/update")
+	public String update(@ModelAttribute("edit_documento_attr") DocumentoDTO documentoDTO, BindingResult result,
+			Model model, RedirectAttributes redirectAttrs, HttpServletRequest request) {
+
+		if (result.hasErrors()) {
+			return "permesso/edit";
+		}
+
+		documentoService.aggiorna(documentoDTO.buildDocumentoModel(true, true));
+
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "redirect:/documento";
+	}
+
+	@PostMapping("/delete")
+	public String delete(@RequestParam(name = "idDocumentoForDelete", required = true) Long idDocumento) {
+		documentoService.rimuovi(new Documento(idDocumento));
+		return "redirect:/documento";
+	}
 }

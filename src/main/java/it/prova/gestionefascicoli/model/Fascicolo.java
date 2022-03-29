@@ -27,7 +27,7 @@ public class Fascicolo {
 	@Column(name = "datacreazione")
 	private Date dataCreazione;
 	@Column(name = "dataultimamodifica")
-	private Date dataUltimaModifica;
+	private Date dataChiusura;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "fascicolo")
 	private Set<Documento> documenti = new HashSet<>();
@@ -49,13 +49,13 @@ public class Fascicolo {
 		this.dataCreazione = dataCreazione;
 	}
 
-	public Fascicolo(Long id, String codice, String descrizione, Date dataCreazione, Date dataUltimaModifica) {
+	public Fascicolo(Long id, String codice, String descrizione, Date dataCreazione, Date dataChiusura) {
 		super();
 		this.id = id;
 		this.codice = codice;
 		this.descrizione = descrizione;
 		this.dataCreazione = dataCreazione;
-		this.dataUltimaModifica = dataUltimaModifica;
+		this.dataChiusura = dataChiusura;
 	}
 
 	public Fascicolo(Long id, String codice, String descrizione, Date dataCreazione, Set<Documento> documenti) {
@@ -67,14 +67,14 @@ public class Fascicolo {
 		this.documenti = documenti;
 	}
 
-	public Fascicolo(Long id, String codice, String descrizione, Date dataCreazione, Date dataUltimaModifica,
+	public Fascicolo(Long id, String codice, String descrizione, Date dataCreazione, Date dataChiusura,
 			Set<Documento> documenti) {
 		super();
 		this.id = id;
 		this.codice = codice;
 		this.descrizione = descrizione;
 		this.dataCreazione = dataCreazione;
-		this.dataUltimaModifica = dataUltimaModifica;
+		this.dataChiusura = dataChiusura;
 		this.documenti = documenti;
 	}
 
@@ -110,12 +110,12 @@ public class Fascicolo {
 		this.dataCreazione = dataCreazione;
 	}
 
-	public Date getDataUltimaModifica() {
-		return dataUltimaModifica;
+	public Date getDataChiusura() {
+		return dataChiusura;
 	}
 
-	public void setDataUltimaModifica(Date dataUltimaModifica) {
-		this.dataUltimaModifica = dataUltimaModifica;
+	public void setDataChiusura(Date dataChiusura) {
+		this.dataChiusura = dataChiusura;
 	}
 
 	public Set<Documento> getDocumenti() {
@@ -129,7 +129,7 @@ public class Fascicolo {
 	@Override
 	public String toString() {
 		return "Fascicolo [id=" + id + ", codice=" + codice + ", descrizione=" + descrizione + ", dataCreazione="
-				+ dataCreazione + ", dataUltimaModifica=" + dataUltimaModifica + "]";
+				+ dataCreazione + ", dataChiusura=" + dataChiusura + "]";
 	}
 
 }

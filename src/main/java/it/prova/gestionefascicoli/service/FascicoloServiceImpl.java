@@ -42,7 +42,14 @@ public class FascicoloServiceImpl implements FascicoloService {
 	@Override
 	@Transactional
 	public void aggiorna(Fascicolo fascicoloInstance) {
-		repository.save(fascicoloInstance);
+		Fascicolo fascicoloReloaded = repository.findById(fascicoloInstance.getId()).orElse(null);
+		if (fascicoloReloaded == null || fascicoloReloaded.getId() == null) {
+			throw new NullPointerException();
+		}
+		fascicoloReloaded.setCodice(fascicoloInstance.getCodice());
+		fascicoloReloaded.setDescrizione(fascicoloInstance.getDescrizione());
+		fascicoloReloaded.setDataChiusura(fascicoloInstance.getDataChiusura());
+		repository.save(fascicoloReloaded);
 	}
 
 	@Override
@@ -53,7 +60,7 @@ public class FascicoloServiceImpl implements FascicoloService {
 		}
 
 		fascicoloInstance.setDataCreazione(new Date());
-		fascicoloInstance.setDataUltimaModifica(new Date());
+		fascicoloInstance.setDataChiusura(new Date());
 		repository.save(fascicoloInstance);
 	}
 
@@ -80,9 +87,8 @@ public class FascicoloServiceImpl implements FascicoloService {
 			if (example.getDataCreazione() != null)
 				predicates.add(cb.greaterThanOrEqualTo(root.get("dataCreazione"), example.getDataCreazione()));
 
-			if (example.getDataUltimaModifica() != null)
-				predicates
-						.add(cb.greaterThanOrEqualTo(root.get("dataUltimaModifica"), example.getDataUltimaModifica()));
+			if (example.getDataChiusura() != null)
+				predicates.add(cb.greaterThanOrEqualTo(root.get("dataChiusura"), example.getDataChiusura()));
 
 			return cb.and(predicates.toArray(new Predicate[predicates.size()]));
 		};
@@ -105,7 +111,7 @@ public class FascicoloServiceImpl implements FascicoloService {
 	@Override
 	public void inserisciFascicoloConDate(Fascicolo fascicoloInstance) {
 		fascicoloInstance.setDataCreazione(new Date());
-		fascicoloInstance.setDataUltimaModifica(new Date());
+		fascicoloInstance.setDataChiusura(new Date());
 		repository.save(fascicoloInstance);
 	}
 
@@ -126,7 +132,6 @@ public class FascicoloServiceImpl implements FascicoloService {
 
 	@Transactional(readOnly = true)
 	public List<Fascicolo> cercaByCodiceILike(String term) {
-		System.out.println("TERM: " + term);
 		return repository.findByCodice(term);
 	}
 

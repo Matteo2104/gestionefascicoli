@@ -70,7 +70,7 @@
 									<form:errors  path="descrizione" cssClass="error_field" />
 								</div>
 								
-
+								<!--  
 								<div class="col-md-3">
 									<div class="form-check">
 										<input class="form-check-input" name="privato" type="checkbox" id="privato" >
@@ -79,8 +79,21 @@
 										</label>
 									</div>
 								</div>
+								-->
 								
-								<div id="fileAllegato" class="col-md-6 datiMalattia">
+								<div class="col-md-3" >
+										<label for="riservato" class="form-label">Riservato <span class="text-danger">*</span></label>
+										<spring:bind path="riservato">
+								    	<select class="form-select" id="riservato" name="riservato">
+								    		<option value="${false }" selected> - Selezionare - </option>
+								      		<option value="${true }" >Si</option>
+								      		<option value="${false }">No</option>
+								    	</select>
+								    	</spring:bind>
+									<form:errors  path="riservato" cssClass="error_field" />
+								</div>
+								
+								<div id="fileAllegato" class="col-md-8">
 									  <label for="fileAllegato" class="form-label">Allegato <span class="text-danger">*</span></label>
 									  <input class="form-control" type="file" id="fileAllegato" name="fileAllegato" required>
 								</div>

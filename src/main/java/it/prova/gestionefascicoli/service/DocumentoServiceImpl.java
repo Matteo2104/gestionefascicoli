@@ -40,6 +40,7 @@ public class DocumentoServiceImpl implements DocumentoService {
 	@Override
 	@Transactional
 	public void aggiorna(Documento documentoInstance) {
+		documentoInstance.setDataUltimaModifica(new Date());
 		repository.save(documentoInstance);
 	}
 
@@ -49,23 +50,22 @@ public class DocumentoServiceImpl implements DocumentoService {
 		if (documentoInstance == null || documentoInstance.getId() != null) {
 			throw new NullPointerException();
 		}
+		
 
 		documentoInstance.setDataCreazione(new Date());
 		documentoInstance.setDataUltimaModifica(new Date());
 		repository.save(documentoInstance);
 	}
-	
+
 	@Override
 	@Transactional
 	public void inserisciNuovoConDate(Documento documentoInstance) {
-		System.out.println(documentoInstance);
-		
 		Date data = new Date();
-		
+
 		documentoInstance.setDataCreazione(data);
 		documentoInstance.setDataUltimaModifica(data);
-		
-		//repository.save(documentoInstance);
+
+		// repository.save(documentoInstance);
 	}
 
 	@Override
