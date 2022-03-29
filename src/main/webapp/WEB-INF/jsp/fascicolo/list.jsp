@@ -44,7 +44,7 @@
 			                    </tr>
 			                </thead>
 			                <tbody>
-			                	<c:forEach items="${fascicolo_list_attribute }" var="fascicoloItem">
+			                	<c:forEach items="${list_fascicolo_attr }" var="fascicoloItem">
 									<tr>
 										<td>${fascicoloItem.codice }</td>
 										<td>${fascicoloItem.dataCreazione }</td>
@@ -54,6 +54,7 @@
 											<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="${pageContext.request.contextPath}/fascicolo/edit/${fascicoloItem.id }">Edit</a>
 											<a id="deleteFascicoloLink_#_${fascicoloItem.id }" class="btn btn-outline-danger btn-sm link-for-modal" data-bs-toggle="modal" data-bs-target="#confirmOperationModal1">Delete</a>
 										</td>			 
+
 										
 										
 										

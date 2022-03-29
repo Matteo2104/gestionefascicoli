@@ -13,6 +13,7 @@ public class FascicoloDTO {
 	private Long id;
 	@NotBlank(message = "{codice.notblank}")
 	private String codice;
+	
 	@NotBlank(message = "{descrizione.notblank}")
 	private String descrizione;
 
@@ -87,6 +88,7 @@ public class FascicoloDTO {
 	}
 
 	public Fascicolo buildFascicoloModel() {
+		System.out.println("SEI DENTRO");
 		return new Fascicolo(this.id, this.codice, this.descrizione, this.dataCreazione, this.dataUltimaModifica);
 	}
 

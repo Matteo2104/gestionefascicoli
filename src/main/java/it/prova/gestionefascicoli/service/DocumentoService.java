@@ -21,4 +21,6 @@ public interface DocumentoService {
 
 	public Page<Documento> findByExample(Documento example, Integer pageNo, Integer pageSize, String sortBy);
 
+	public void inserisciNuovoConDate(Documento documentoInstance);
+
 }

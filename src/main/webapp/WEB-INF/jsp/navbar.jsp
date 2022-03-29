@@ -45,7 +45,7 @@
 		      </li>
 		      
 		      <li class="nav-item dropdown">
-		        <a class="nav-link dropdown-toggle ${path == 'gestioneDipendenti'?'active':''}" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestione Documenti</a>
+		        <a class="nav-link dropdown-toggle ${path == 'gestioneDocumenti'?'active':''}" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestione Documenti</a>
 		        <div class="dropdown-menu" aria-labelledby="dropdown01">
 		          <a class="dropdown-item" href="${pageContext.request.contextPath}/documento/search">Ricerca Documenti</a>
 		          <a class="dropdown-item" href="${pageContext.request.contextPath}/documento/insert">Inserisci Documento</a>

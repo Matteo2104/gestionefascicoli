@@ -23,7 +23,7 @@ public class DocumentoDTO {
 
 	private Boolean riservato;
 
-	private byte[] payload;
+	private byte[] fileAllegato;
 
 	@NotNull(message = "{fascicolo.notnull}")
 	private FascicoloDTO fascicolo;
@@ -74,27 +74,27 @@ public class DocumentoDTO {
 	}
 
 	public DocumentoDTO(Long id, String codice, String descrizione, Date dataCreazione, Boolean riservato,
-			byte[] payload) {
+			byte[] fileAllegato) {
 		super();
 		this.id = id;
 		this.codice = codice;
 		this.descrizione = descrizione;
 		this.dataCreazione = dataCreazione;
 		this.riservato = riservato;
-		this.payload = payload;
+		this.fileAllegato = fileAllegato;
 	}
 
-	public DocumentoDTO(String codice, String descrizione, Date dataCreazione, Boolean riservato, byte[] payload) {
+	public DocumentoDTO(String codice, String descrizione, Date dataCreazione, Boolean riservato, byte[] fileAllegato) {
 		super();
 		this.codice = codice;
 		this.descrizione = descrizione;
 		this.dataCreazione = dataCreazione;
 		this.riservato = riservato;
-		this.payload = payload;
+		this.fileAllegato = fileAllegato;
 	}
 
 	public DocumentoDTO(Long id, String codice, String descrizione, Date dataCreazione, Date dataUltimaModifica,
-			Boolean riservato, byte[] payload, FascicoloDTO fascicolo) {
+			Boolean riservato, byte[] fileAllegato, FascicoloDTO fascicolo) {
 		super();
 		this.id = id;
 		this.codice = codice;
@@ -102,7 +102,7 @@ public class DocumentoDTO {
 		this.dataCreazione = dataCreazione;
 		this.dataUltimaModifica = dataUltimaModifica;
 		this.riservato = riservato;
-		this.payload = payload;
+		this.fileAllegato = fileAllegato;
 		this.fascicolo = fascicolo;
 	}
 
@@ -150,17 +150,34 @@ public class DocumentoDTO {
 		this.riservato = riservato;
 	}
 
-	public byte[] getPayload() {
-		return payload;
+	public byte[] getFileAllegato() {
+		return fileAllegato;
 	}
 
-	public void setPayload(byte[] payload) {
-		this.payload = payload;
+	public void setFileAllegato(byte[] fileAllegato) {
+		this.fileAllegato = fileAllegato;
+
 	}
 
-	public Documento buildDocumentoModel() {
-		return new Documento(this.id, this.codice, this.descrizione, this.dataCreazione, this.dataUltimaModifica,
-				this.riservato, this.fascicolo.buildFascicoloModel());
+	public FascicoloDTO getFascicolo() {
+		return fascicolo;
+	}
+
+	public void setFascicolo(FascicoloDTO fascicolo) {
+		this.fascicolo = fascicolo;
+	}
+
+	public Documento buildDocumentoModel(Boolean includeFascicolo, Boolean includeFileAllegato) {
+		Documento result = new Documento(this.id, this.codice, this.descrizione, this.dataCreazione,
+				this.dataUltimaModifica, this.riservato);
+		if (includeFascicolo && this.fascicolo != null) {
+			result.setFascicolo(this.fascicolo.buildFascicoloModel());
+		}
+		if (includeFileAllegato && this.fileAllegato != null) {
+			result.setFileAllegato(this.fileAllegato);
+		}
+
+		return result;
 	}
 
 	public static DocumentoDTO buildDocumentoDTOFromModel(Documento documentoModel) {
@@ -174,6 +191,12 @@ public class DocumentoDTO {
 		return modelListInput.stream().map(documentoEntity -> {
 			return DocumentoDTO.buildDocumentoDTOFromModel(documentoEntity);
 		}).collect(Collectors.toList());
+	}
+
+	@Override
+	public String toString() {
+		return "DocumentoDTO [id=" + id + ", codice=" + codice + ", descrizione=" + descrizione + ", dataCreazione="
+				+ dataCreazione + ", dataUltimaModifica=" + dataUltimaModifica + ", riservato=" + riservato + "]";
 	}
 
 }

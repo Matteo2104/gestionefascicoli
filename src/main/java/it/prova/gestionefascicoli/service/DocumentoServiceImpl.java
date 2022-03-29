@@ -1,6 +1,7 @@
 package it.prova.gestionefascicoli.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.criteria.Predicate;
@@ -45,7 +46,26 @@ public class DocumentoServiceImpl implements DocumentoService {
 	@Override
 	@Transactional
 	public void inserisciNuovo(Documento documentoInstance) {
+		if (documentoInstance == null || documentoInstance.getId() != null) {
+			throw new NullPointerException();
+		}
+
+		documentoInstance.setDataCreazione(new Date());
+		documentoInstance.setDataUltimaModifica(new Date());
 		repository.save(documentoInstance);
+	}
+	
+	@Override
+	@Transactional
+	public void inserisciNuovoConDate(Documento documentoInstance) {
+		System.out.println(documentoInstance);
+		
+		Date data = new Date();
+		
+		documentoInstance.setDataCreazione(data);
+		documentoInstance.setDataUltimaModifica(data);
+		
+		//repository.save(documentoInstance);
 	}
 
 	@Override

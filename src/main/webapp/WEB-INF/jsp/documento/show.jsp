@@ -12,7 +12,7 @@
 	<!-- Fixed navbar -->
 	<jsp:include page="../navbar.jsp" />
 	
-	<i class="bi bi-download"></i>
+	
 	
 	<!-- Begin page content -->
 	<main class="flex-shrink-0">
