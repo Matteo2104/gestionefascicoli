@@ -126,4 +126,10 @@ public class Fascicolo {
 		this.documenti = documenti;
 	}
 
+	@Override
+	public String toString() {
+		return "Fascicolo [id=" + id + ", codice=" + codice + ", descrizione=" + descrizione + ", dataCreazione="
+				+ dataCreazione + ", dataUltimaModifica=" + dataUltimaModifica + "]";
+	}
+
 }

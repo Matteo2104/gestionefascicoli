@@ -46,6 +46,12 @@ public class DocumentoServiceImpl implements DocumentoService {
 	@Override
 	@Transactional
 	public void inserisciNuovo(Documento documentoInstance) {
+		if (documentoInstance == null || documentoInstance.getId() != null) {
+			throw new NullPointerException();
+		}
+
+		documentoInstance.setDataCreazione(new Date());
+		documentoInstance.setDataUltimaModifica(new Date());
 		repository.save(documentoInstance);
 	}
 	

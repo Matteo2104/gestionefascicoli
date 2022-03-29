@@ -1,6 +1,5 @@
 package it.prova.gestionefascicoli.dto;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -157,6 +156,7 @@ public class DocumentoDTO {
 
 	public void setFileAllegato(byte[] fileAllegato) {
 		this.fileAllegato = fileAllegato;
+
 	}
 
 	public FascicoloDTO getFascicolo() {
@@ -167,9 +167,17 @@ public class DocumentoDTO {
 		this.fascicolo = fascicolo;
 	}
 
-	public Documento buildDocumentoModel() {
-		return new Documento(this.id, this.codice, this.descrizione, this.dataCreazione, this.dataUltimaModifica,
-				this.riservato, this.fascicolo.buildFascicoloModel());
+	public Documento buildDocumentoModel(Boolean includeFascicolo, Boolean includeFileAllegato) {
+		Documento result = new Documento(this.id, this.codice, this.descrizione, this.dataCreazione,
+				this.dataUltimaModifica, this.riservato);
+		if (includeFascicolo && this.fascicolo != null) {
+			result.setFascicolo(this.fascicolo.buildFascicoloModel());
+		}
+		if (includeFileAllegato && this.fileAllegato != null) {
+			result.setFileAllegato(this.fileAllegato);
+		}
+
+		return result;
 	}
 
 	public static DocumentoDTO buildDocumentoDTOFromModel(Documento documentoModel) {
@@ -185,14 +193,10 @@ public class DocumentoDTO {
 		}).collect(Collectors.toList());
 	}
 
-	
 	@Override
 	public String toString() {
 		return "DocumentoDTO [id=" + id + ", codice=" + codice + ", descrizione=" + descrizione + ", dataCreazione="
-				+ dataCreazione + ", dataUltimaModifica=" + dataUltimaModifica + ", riservato=" + riservato
-				+ ", fileAllegato=" + Arrays.toString(fileAllegato) + "]";
+				+ dataCreazione + ", dataUltimaModifica=" + dataUltimaModifica + ", riservato=" + riservato + "]";
 	}
 
-	
-	
 }
