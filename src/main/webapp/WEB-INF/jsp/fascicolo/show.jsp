@@ -7,6 +7,7 @@
 	<!-- Common imports in pages -->
 	<jsp:include page="../header.jsp" />
 	<title>Visualizza Dettaglio Fascicolo</title>
+	<title>Visualizza elemento</title>
 	
 </head>
 <body class="d-flex flex-column h-100">
@@ -19,7 +20,7 @@
 			
 			<div class='card'>
 			    <div class='card-header'>
-			        Visualizza dettaglio Fascicolo
+			        Visualizza dettaglio Fascicolo 
 			    </div>
 			
 			    <div class='card-body'>
@@ -92,11 +93,11 @@
 					  </div>
 					<!-- end info Ruoli -->
 					</div>
-					
 			    <!-- end card body -->
 			    </div>
 			    
 			    <div class='card-footer'>
+
 			        <a href="${pageContext.request.contextPath }/fascicolo" class='btn btn-outline-secondary' style='width:100px'>
 			            <i class='fa fa-chevron-left'></i> Indietro
 			        </a>

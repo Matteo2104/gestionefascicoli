@@ -59,22 +59,28 @@
 									<form:errors  path="descrizione" cssClass="error_field" />
 								</div>
 								
-							<div class="col-12">	
-								<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>
-								<input class="btn btn-outline-warning" type="reset" value="Ripulisci">
-							</div>
-	
-							
+								<div class="col-12">
+									<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>
+									<input class="btn btn-outline-warning" type="reset" value="Ripulisci">
+								</div>
+		
 						</form:form>
+  
+				    
+				    
+					<!-- end card-body -->			   
+				    </div>
+				<!-- end card -->
+				</div>		
+					  
 			    
-				<!-- end card-body -->			   
-			    </div>
-			</div>	
-	
-		</div>
-	<!-- end container -->	
-	</main>
-	<jsp:include page="../footer.jsp" />
-	
-</body>
+			  <!-- end container -->  
+			  </div>
+			  
+			</main>
+			
+			<!-- Footer -->
+			<jsp:include page="../footer.jsp" />
+	  </body>
+
 </html>

@@ -27,4 +27,7 @@ public interface FascicoloService {
 
 	public void inserisciFascicoloConDate(Fascicolo fascicoloInstance);
 
+
+	public void rimuoviFascicolo(Long id);
+
 }

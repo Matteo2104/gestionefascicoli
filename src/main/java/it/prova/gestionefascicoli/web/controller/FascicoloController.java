@@ -3,14 +3,12 @@ package it.prova.gestionefascicoli.web.controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,10 +22,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import it.prova.gestionefascicoli.dto.FascicoloDTO;
+import it.prova.gestionefascicoli.exceptions.FascicoloConDocumentiException;
+import it.prova.gestionefascicoli.exceptions.FascicoloNotFoundException;
 import it.prova.gestionefascicoli.model.Fascicolo;
 import it.prova.gestionefascicoli.service.FascicoloService;
 
@@ -38,11 +39,13 @@ public class FascicoloController {
 	private FascicoloService fascicoloService;
 
 	@GetMapping
-	public String listAll(Model model) {
-
-		model.addAttribute("list_fascicolo_attr", fascicoloService.listAllElements());
-
-		return "list";
+	public ModelAndView listAllDipendenti() {
+		ModelAndView mv = new ModelAndView();
+		List<Fascicolo> fascicoli = fascicoloService.listAllElements();
+		mv.addObject("list_fascicolo_attr", FascicoloDTO.createFascicoloDTOListFromModelList(fascicoli));
+		mv.addObject("path", "gestioneFascicoli");
+		mv.setViewName("fascicolo/list");
+		return mv;
 	}
 
 	// CICLO RICERCA
@@ -53,8 +56,16 @@ public class FascicoloController {
 
 	@PostMapping("/find")
 	public String find(FascicoloDTO example, Model model) {
-		model.addAttribute("list_fascicolo_attr", FascicoloDTO.createFascicoloDTOListFromModelList(
-				fascicoloService.findByExample(example.buildFascicoloModel(), null, null, null).toList()));
+		List<FascicoloDTO> listaFascicoli = FascicoloDTO.createFascicoloDTOListFromModelList(
+				fascicoloService.findByExample(example.buildFascicoloModel(), null, null, null).toList());
+		
+		/*
+		for (FascicoloDTO fascicolo : listaFascicoli) {
+			System.out.println(fascicolo);
+		}
+		*/
+		
+		model.addAttribute("list_fascicolo_attr", listaFascicoli);
 		return "fascicolo/list";
 	}
 	
@@ -79,33 +90,71 @@ public class FascicoloController {
 
 		return new Gson().toJson(ja);
 	}
+	/*
+	@GetMapping("/show/{idFascicolo}")
+	public String showDipendente(@PathVariable(required = true) Long idFascicolo, Model model) {
+		model.addAttribute("show_fascicolo_attr",
+				FascicoloDTO.buildFascicoloDTOFromModel(fascicoloService.caricaSingoloElementoEager(idFascicolo)));
+		model.addAttribute("path", "gestioneFascicoli");
 
+		return "fascicolo/show";
+	}
+	*/
+	
+	
 	@GetMapping("/insert")
-	public String createFascicolo(Model model) {
+	public String create(Model model) {
+		model.addAttribute("fascicolo_totali_attr",
+				FascicoloDTO.createFascicoloDTOListFromModelList(fascicoloService.listAllElements()));
 		model.addAttribute("insert_fascicolo_attr", new FascicoloDTO());
+		model.addAttribute("path", "gestioneFascicoli");
 		return "fascicolo/insert";
 	}
 
+	// per la validazione devo usare i groups in quanto nella insert devo validare
+	// la pwd, nella edit no
 	@PostMapping("/save")
-	public String saveRegista(@Valid @ModelAttribute("insert_fascicolo_attr") FascicoloDTO fascicoloDTO,
-			BindingResult result, RedirectAttributes redirectAttrs) {
+	public String save(@Validated @ModelAttribute("insert_fascicolo_attr") FascicoloDTO fascicoloDTO,
+			BindingResult result, Model model, RedirectAttributes redirectAttrs) {
 
 		if (result.hasErrors()) {
+			FascicoloDTO.createFascicoloDTOListFromModelList(fascicoloService.listAllElements());
+
 			return "fascicolo/insert";
 		}
-		fascicoloService.inserisciFascicoloConDate(fascicoloDTO.buildFascicoloModel());
+		fascicoloService.inserisciNuovo(fascicoloDTO.buildFascicoloModel());
 
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/fascicolo";
 	}
 
+
 	// CICLO VISUALIZZA
 	@GetMapping("/show/{idFascicolo}")
-	public String createFascicolo(@PathVariable(required = true) Long idFascicolo, Model model) {
+	public String show(@PathVariable(required = true) Long idFascicolo, Model model) {
 		
 		
 		model.addAttribute("show_fascicolo_attr", fascicoloService.caricaSingoloElementoEager(idFascicolo));
 		return "fascicolo/show";
+	}
+		
+	@PostMapping("/delete")
+	public String delete(@RequestParam(name = "idFascicoloToDelete", required = true) Long idFascicolo,
+			RedirectAttributes redirectAttrs) {
+
+		try {
+			fascicoloService.rimuoviFascicolo(idFascicolo);
+		} catch (FascicoloNotFoundException e) {
+			redirectAttrs.addFlashAttribute("errorMessage", "Impossibile trovare il fascicolo da rimuovere!");
+			return "redirect:/fascicolo";
+		} catch (FascicoloConDocumentiException e) {
+			redirectAttrs.addFlashAttribute("errorMessage",
+					"Il fascicolo che tenti di eliminare ha dei documenti associati!");
+			return "redirect:/contribuente";
+		}
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "redirect:/fascicolo";
+
 	}
 
 }
