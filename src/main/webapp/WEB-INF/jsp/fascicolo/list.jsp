@@ -52,7 +52,7 @@
 										<td>
 											<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/fascicolo/show/${fascicoloItem.id }">Visualizza</a>
 											<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="${pageContext.request.contextPath}/fascicolo/edit/${fascicoloItem.id }">Edit</a>
-											<a id="deleteFascicoloLink_#_${richiestaItem.id }" class="btn btn-outline-danger btn-sm link-for-modal" data-bs-toggle="modal" data-bs-target="#confirmOperationModal1">Delete</a>
+											<a id="deleteFascicoloLink_#_${fascicoloItem.id }" class="btn btn-outline-danger btn-sm link-for-modal" data-bs-toggle="modal" data-bs-target="#confirmOperationModal1">Delete</a>
 										</td>			 
 										
 										
@@ -103,7 +103,7 @@
 			<!-- mi prendo il numero che poi sarà l'id. Il 18 è perché 'changeStatoLink_#_' è appunto lungo 18  -->
 			var callerId = $(this).attr('id').substring(22);
 			<!-- imposto nell'hidden del modal l'id da postare alla servlet -->
-			$('#idRichiestaToDelete').val(callerId);
+			$('#idFascicoloToDelete').val(callerId);
 		});
 	</script>
 	
