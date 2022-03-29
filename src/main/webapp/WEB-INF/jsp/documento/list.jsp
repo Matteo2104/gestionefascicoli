@@ -53,7 +53,11 @@
 										<td>
 											<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/documento/show/${documentoItem.id }">Visualizza</a>
 											<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="${pageContext.request.contextPath}/documento/edit/${documentoItem.id }">Edit</a>
+<<<<<<< HEAD
+											<a class="btn  btn-sm btn-outline-danger ml-2 mr-2" href="${pageContext.request.contextPath}/documento/delete/${documentoItem.id }">Delete</a>
+=======
 											<a id="changeStatoLink_#_${documentoItem.id }" class="btn btn-outline-danger btn-sm link-for-modal" data-bs-toggle="modal" data-bs-target="#confirmOperationModal"  >Elimina</a>
+>>>>>>> 8e6f6ae191b3ee1f2675d1527b8935d01f573c36
 										</td>
 										
 										

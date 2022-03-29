@@ -64,9 +64,8 @@
 								<div class="col-md-3">
 									<label for="riservato" class="form-label">Riservato <span class="text-danger">*</span></label>
 									    <select class="form-select " id="riservato" name="riservato" required >
-									    	<option value="" selected> - Selezionare - </option>
-									      	<option value="${true }" >Si</option>
-									    	<option value="${false }">No</option>
+									      	<option value="${true }" ${edit_documento_attr.riservato?'checked':''}>Si</option>
+									    	<option value="${false }" ${edit_documento_attr.riservato?'':'checked'}>No</option>
 								    	</select>
 								</div>
 								

@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.prova.gestionefascicoli.dto.DocumentoDTO;
+import it.prova.gestionefascicoli.dto.FascicoloDTO;
 import it.prova.gestionefascicoli.model.Documento;
 import it.prova.gestionefascicoli.service.DocumentoService;
 
@@ -114,13 +115,15 @@ public class DocumentoController {
 	@GetMapping("/edit/{idDocumento}")
 	public String edit(@PathVariable(required = true) Long idDocumento, Model model) {
 		DocumentoDTO documentoDTO = DocumentoDTO
-				.buildDocumentoDTOFromModel(documentoService.caricaSingoloElemento(idDocumento));
+				.buildDocumentoDTOFromModel(documentoService.caricaSingoloElementoEager(idDocumento));
 
-		// System.out.println(richiestaPermesso);
+		//System.out.println(documentoDTO.getFascicolo().getId());
+		
+		
 
 		model.addAttribute("edit_documento_attr", documentoDTO);
 		model.addAttribute("errorMessage", "Operazione non autorizzata!!");
-		return "permesso";
+		return "documento/edit";
 	}
 
 	@PostMapping("/update")
@@ -128,8 +131,13 @@ public class DocumentoController {
 			Model model, RedirectAttributes redirectAttrs, HttpServletRequest request) {
 
 		if (result.hasErrors()) {
-			return "permesso/edit";
+			return "documento/edit";
 		}
+		
+		Documento documentoReloaded = documentoService.caricaSingoloElementoEager(documentoDTO.getId());
+		documentoDTO.setFascicolo(FascicoloDTO.buildFascicoloDTOFromModel(documentoReloaded.getFascicolo()));
+		
+		//System.out.println(documentoDTO.getFascicolo());
 
 		documentoService.aggiorna(documentoDTO.buildDocumentoModel(true, true));
 
