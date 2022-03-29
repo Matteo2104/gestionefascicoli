@@ -40,8 +40,21 @@ public class DocumentoServiceImpl implements DocumentoService {
 	@Override
 	@Transactional
 	public void aggiorna(Documento documentoInstance) {
-		documentoInstance.setDataUltimaModifica(new Date());
-		repository.save(documentoInstance);
+		Documento documentoReloaded = repository.findByIdEager(documentoInstance.getId()).orElse(null);
+		
+		//System.out.println(documentoInstance.getFascicolo().getId());
+		
+		documentoReloaded.setCodice(documentoInstance.getCodice());
+		documentoReloaded.setDescrizione(documentoInstance.getDescrizione());
+		documentoReloaded.setDataCreazione(documentoInstance.getDataCreazione());
+		documentoReloaded.setDataUltimaModifica(new Date());
+		documentoReloaded.setFileAllegato(documentoInstance.getFileAllegato());
+		documentoReloaded.setRiservato(documentoInstance.getRiservato());
+		documentoReloaded.setFascicolo(documentoInstance.getFascicolo());
+		
+		//System.out.println(documentoReloaded);
+		
+		repository.save(documentoReloaded);
 	}
 
 	@Override
