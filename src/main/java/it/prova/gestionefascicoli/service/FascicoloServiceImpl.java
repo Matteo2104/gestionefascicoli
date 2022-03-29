@@ -46,6 +46,12 @@ public class FascicoloServiceImpl implements FascicoloService {
 	@Override
 	@Transactional
 	public void inserisciNuovo(Fascicolo fascicoloInstance) {
+		if (fascicoloInstance == null || fascicoloInstance.getId() != null) {
+			throw new NullPointerException();
+		}
+
+		fascicoloInstance.setDataCreazione(new Date());
+		fascicoloInstance.setDataUltimaModifica(new Date());
 		repository.save(fascicoloInstance);
 	}
 

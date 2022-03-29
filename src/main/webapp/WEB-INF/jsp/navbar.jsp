@@ -37,7 +37,7 @@
 
           
 		      <li class="nav-item dropdown">
-		        <a class="nav-link dropdown-toggle ${path == 'gestioneDipendenti'?'active':''}" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestione Fascicoli</a>
+		        <a class="nav-link dropdown-toggle ${path == 'gestioneFascicoli'?'active':''}" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestione Fascicoli</a>
 		        <div class="dropdown-menu" aria-labelledby="dropdown01">
 		          <a class="dropdown-item" href="${pageContext.request.contextPath}/fascicolo/search">Ricerca Fascicoli</a>
 		          <a class="dropdown-item" href="${pageContext.request.contextPath}/fascicolo/insert">Inserisci Fascicolo</a>

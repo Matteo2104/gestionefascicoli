@@ -44,7 +44,7 @@
 			                    </tr>
 			                </thead>
 			                <tbody>
-			                	<c:forEach items="${list_fascicolo_attr }" var="fascicoloItem">
+			                	<c:forEach items="${fascicolo_list_attribute }" var="fascicoloItem">
 									<tr>
 										<td>${fascicoloItem.codice }</td>
 										<td>${fascicoloItem.dataCreazione }</td>
