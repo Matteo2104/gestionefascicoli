@@ -80,7 +80,7 @@
 								<div class="col-12">
 									<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>
 									<input class="btn btn-outline-warning" type="reset" value="Ripulisci">
-									<a class="btn btn-outline-secondary ml-2" href="${pageContext.request.contextPath }/dipendente">Torna alla Lista</a>
+									<a class="btn btn-outline-secondary ml-2" href="${pageContext.request.contextPath }/fascicolo">Torna alla Lista</a>
 								</div>
 		
 						</form:form>
