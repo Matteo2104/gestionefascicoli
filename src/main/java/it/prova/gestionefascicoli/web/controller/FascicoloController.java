@@ -1,21 +1,11 @@
 package it.prova.gestionefascicoli.web.controller;
 
-<<<<<<< Updated upstream
-import javax.validation.Valid;
-=======
 import java.util.List;
->>>>>>> Stashed changes
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-<<<<<<< Updated upstream
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-=======
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
->>>>>>> Stashed changes
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.prova.gestionefascicoli.dto.FascicoloDTO;
@@ -59,22 +48,6 @@ public class FascicoloController {
 		return "fascicolo/list";
 	}
 
-<<<<<<< Updated upstream
-	@GetMapping("/insert")
-	public String createFascicolo(Model model) {
-		model.addAttribute("insert_fascicolo_attr", new FascicoloDTO());
-		return "fascicolo/insert";
-	}
-
-	@PostMapping("/save")
-	public String saveRegista(@Valid @ModelAttribute("insert_fascicolo_attr") FascicoloDTO fascicoloDTO,
-			BindingResult result, RedirectAttributes redirectAttrs) {
-
-		if (result.hasErrors()) {
-			return "fascicolo/insert";
-		}
-		fascicoloService.inserisciFascicoloConDate(fascicoloDTO.buildFascicoloModel());
-=======
 	@GetMapping("/show/{idFascicolo}")
 	public String showDipendente(@PathVariable(required = true) Long idFascicolo, Model model) {
 		model.addAttribute("show_fascicolo_attr",
@@ -105,7 +78,6 @@ public class FascicoloController {
 			return "fascicolo/insert";
 		}
 		fascicoloService.inserisciNuovo(fascicoloDTO.buildFascicoloModel());
->>>>>>> Stashed changes
 
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/fascicolo";
