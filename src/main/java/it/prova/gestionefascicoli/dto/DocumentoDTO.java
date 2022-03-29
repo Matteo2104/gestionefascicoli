@@ -1,5 +1,6 @@
 package it.prova.gestionefascicoli.dto;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,7 +24,7 @@ public class DocumentoDTO {
 
 	private Boolean riservato;
 
-	private byte[] payload;
+	private byte[] fileAllegato;
 
 	@NotNull(message = "{fascicolo.notnull}")
 	private FascicoloDTO fascicolo;
@@ -74,27 +75,27 @@ public class DocumentoDTO {
 	}
 
 	public DocumentoDTO(Long id, String codice, String descrizione, Date dataCreazione, Boolean riservato,
-			byte[] payload) {
+			byte[] fileAllegato) {
 		super();
 		this.id = id;
 		this.codice = codice;
 		this.descrizione = descrizione;
 		this.dataCreazione = dataCreazione;
 		this.riservato = riservato;
-		this.payload = payload;
+		this.fileAllegato = fileAllegato;
 	}
 
-	public DocumentoDTO(String codice, String descrizione, Date dataCreazione, Boolean riservato, byte[] payload) {
+	public DocumentoDTO(String codice, String descrizione, Date dataCreazione, Boolean riservato, byte[] fileAllegato) {
 		super();
 		this.codice = codice;
 		this.descrizione = descrizione;
 		this.dataCreazione = dataCreazione;
 		this.riservato = riservato;
-		this.payload = payload;
+		this.fileAllegato = fileAllegato;
 	}
 
 	public DocumentoDTO(Long id, String codice, String descrizione, Date dataCreazione, Date dataUltimaModifica,
-			Boolean riservato, byte[] payload, FascicoloDTO fascicolo) {
+			Boolean riservato, byte[] fileAllegato, FascicoloDTO fascicolo) {
 		super();
 		this.id = id;
 		this.codice = codice;
@@ -102,7 +103,7 @@ public class DocumentoDTO {
 		this.dataCreazione = dataCreazione;
 		this.dataUltimaModifica = dataUltimaModifica;
 		this.riservato = riservato;
-		this.payload = payload;
+		this.fileAllegato = fileAllegato;
 		this.fascicolo = fascicolo;
 	}
 
@@ -150,12 +151,20 @@ public class DocumentoDTO {
 		this.riservato = riservato;
 	}
 
-	public byte[] getPayload() {
-		return payload;
+	public byte[] getFileAllegato() {
+		return fileAllegato;
 	}
 
-	public void setPayload(byte[] payload) {
-		this.payload = payload;
+	public void setFileAllegato(byte[] fileAllegato) {
+		this.fileAllegato = fileAllegato;
+	}
+
+	public FascicoloDTO getFascicolo() {
+		return fascicolo;
+	}
+
+	public void setFascicolo(FascicoloDTO fascicolo) {
+		this.fascicolo = fascicolo;
 	}
 
 	public Documento buildDocumentoModel() {
@@ -176,4 +185,14 @@ public class DocumentoDTO {
 		}).collect(Collectors.toList());
 	}
 
+	
+	@Override
+	public String toString() {
+		return "DocumentoDTO [id=" + id + ", codice=" + codice + ", descrizione=" + descrizione + ", dataCreazione="
+				+ dataCreazione + ", dataUltimaModifica=" + dataUltimaModifica + ", riservato=" + riservato
+				+ ", fileAllegato=" + Arrays.toString(fileAllegato) + "]";
+	}
+
+	
+	
 }

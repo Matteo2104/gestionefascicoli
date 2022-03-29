@@ -23,6 +23,12 @@ public class FascicoloServiceImpl implements FascicoloService {
 
 	@Autowired
 	private FascicoloRepository repository;
+	
+	@Override
+	@Transactional
+	public List<Fascicolo> cercaByCodiceILike(String term) {
+		return repository.findByCodiceIgnoreCaseContaining(term);
+	}
 
 	@Override
 	@Transactional(readOnly = true)

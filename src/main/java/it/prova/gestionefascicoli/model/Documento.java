@@ -1,5 +1,6 @@
 package it.prova.gestionefascicoli.model;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -142,6 +143,13 @@ public class Documento {
 
 	public void setFascicolo(Fascicolo fascicolo) {
 		this.fascicolo = fascicolo;
+	}
+
+	@Override
+	public String toString() {
+		return "Documento [id=" + id + ", codice=" + codice + ", descrizione=" + descrizione + ", dataCreazione="
+				+ dataCreazione + ", dataUltimaModifica=" + dataUltimaModifica + ", riservato=" + riservato
+				+ ", fileAllegato=" + Arrays.toString(fileAllegato) + ", fascicolo=" + fascicolo + "]";
 	}
 
 }
